@@ -1,0 +1,36 @@
+{
+  "name": "fe",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build:scss": "sass src/pages:dist/pages",
+    "watch:scss": "sass --watch src/styles/main.scss:dist/styles.css",
+    "watch:ts": "tsc --watch",
+    "watch:html": "nodemon --watch src/pages/**/*.html --exec \"npm run copy:html\"",
+    "copy:html": "copyfiles -u 2 src/pages/**/*.html dist/pages",
+    "build:html": "copyfiles -u 1 src/index.html dist",
+    "dev": "npm-run-all --parallel watch:ts watch:scss watch:html serve",
+    "build": "npm run build:scss && npm run build:html && tsc",
+    "serve": "live-server dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CloudCloudZO/FE.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CloudCloudZO/FE/issues"
+  },
+  "homepage": "https://github.com/CloudCloudZO/FE#readme",
+  "devDependencies": {
+    "copyfiles": "^2.4.1",
+    "nodemon": "^3.1.9",
+    "npm-run-all": "^4.1.5",
+    "sass": "^1.83.4",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.3"
+  }
+}
