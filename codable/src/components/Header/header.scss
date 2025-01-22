@@ -1,0 +1,32 @@
+$header-bg: #3f3f3f;
+$link-color: #ffffff;
+$link-hover-color: #ffffff;
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 18px;
+    background-color: $header-bg;
+
+    .logo {
+        .logo-image {
+            height: 24px;
+            width: 64px;
+        }
+    }
+
+    .nav {
+        display: flex;
+        gap: 15px;
+
+        .link {
+            color: $link-color;
+            text-decoration: none;
+
+            &:hover {
+                color: $link-hover-color;
+            }
+        }
+    }
+}

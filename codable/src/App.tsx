@@ -4,10 +4,12 @@ import Study from "./pages/Study/Study";
 import Login from "./pages/Login/Login";
 import Chat from "./pages/Chat/Chat";
 import Editor from "./pages/Editor/Editor";
+import Header from "./components/Header/header";
 
 const App: React.FC = () => {
     return (
         <Router>
+            <Header />
             <Routes>
                 <Route path="/" element={<Login />} />
                 <Route path="/study" element={<Study />} />
