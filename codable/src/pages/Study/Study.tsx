@@ -43,16 +43,16 @@ const Study: React.FC = () => {
           </div>
         </div>
 
-        {/* 달력 섹션 */}
+        {/* 달력 섹션 {year}년 */}
         <div className="calendarFrame">
           <div className="calendar">
             <header>
-              <p>{year}년 {month + 1}월</p>
+              <p>{month + 1}월</p>
             </header>
             <table>
               <thead>
                 <tr>
-                  {["일", "월", "화", "수", "목", "금", "토"].map((day, idx) => (
+                  {["월", "화", "수", "목", "금", "토", "일"].map((day, idx) => (
                     <th key={idx}>{day}</th>
                   ))}
                 </tr>
@@ -62,7 +62,7 @@ const Study: React.FC = () => {
                   <tr key={rowIdx}>
                     {calendar.slice(rowIdx * 7, rowIdx * 7 + 7).map((date, colIdx) => (
                       <td key={colIdx} className={date ? '' : 'empty'}>
-                        {date || ''}
+                        <p>{date || ''}</p>
                       </td>
                     ))}
                   </tr>
@@ -70,8 +70,10 @@ const Study: React.FC = () => {
               </tbody>
             </table>
           </div>
-          <button className="problemButton">문제 풀기</button>
         </div>
+      </div>
+      <div className='buttonDiv'>
+        <button className="problemButton">문제 풀기</button>
       </div>
     </div>
   );

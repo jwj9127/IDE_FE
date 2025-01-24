@@ -3,19 +3,31 @@ $bodyBackgroundColor: #282B2F;
 $divBackgroundColor: #E3E3E3;
 $borderRadius: 16px;
 $buttonColor: #c4c4c4;
+$selectedColor: #8B8B8B;
 
-// 배경 색상
+// 글자 색
+$textColor: #000000;
+
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
 body {
   background-color: $bodyBackgroundColor;
+  display: flex;       
+  /* 가운데 정렬 */        
+  justify-content: center;    
+  align-items: center;         
 }
 
 .frame {
-  padding: 60px;
   display: flex;
-  flex-direction: column;
+  flex-direction: column;  
   gap: 40px;
-  border: 1px yellow solid;
 }
+
 
 .frame > p {
   color: #d8d8d8;
@@ -25,23 +37,31 @@ body {
 .innerFrame {
   display: flex;
   gap: 20px;
-  border: 1px yellow solid;
   justify-content: space-between; 
-  align-items: center;           
+  align-items: center;  
+  width: 1200px;
+  height: 340px;
 }
 
 .membersFrame {
   display: flex;
   flex-direction: column;
-  gap: 10px; // 각 멤버 간 간격
+  gap: 25px; // 각 멤버 간 간격
+  height: 100%;
 }
 
 .memberDiv {
   background-color: $divBackgroundColor;
-  padding: 10px;
+  padding: 21px;
   border-radius: $borderRadius;
   display: flex;
   align-items: center;
+  width: 250px;
+
+}
+
+.memberDiv:hover {
+  background-color: $selectedColor;
 }
 
 .memberDiv > img {
@@ -53,65 +73,151 @@ body {
 .rulesText {
   background-color: $divBackgroundColor;
   border-radius: $borderRadius;
-  padding: 20px;
+  height: 100%;
+  display: flex;
+  flex-direction: column; 
 }
 
-.subText ul {
-  list-style-type: disc;
+.rulesText>p {
+  margin-top: 30px;
   padding-left: 20px;
 }
+
+.subText {
+  padding-left: 20px;
+  padding-right: 40px;
+  margin-top: 20px;
+}
+
+// 달력 색...
+$calendarBackgroundColor: #F5F5F5; // 날짜 배경 색깔
+$calendarHeaderColor: #E8E8E8; // 1월 칸 색깔
+
 
 .calendarFrame {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+  height: 100%;
+  background-color: transparent;
 }
 
+
+
 .calendar {
-  background-color: $divBackgroundColor;
+  font-size: 14px;
+  color: $textColor;
+  width: 400px;
+  background-color: #e8e8e8;
   border-radius: $borderRadius;
-  padding: 20px;
-  text-align: center;
+}
+
+.calendar header {
+  background-color: $calendarHeaderColor;
+  border-radius: $borderRadius;
+  height: 25px; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  padding: 0; 
+  margin: 0; 
 }
 
 .calendar header p {
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 10px;
+  text-align: center;
+  height: 100%; 
+  line-height: 25px; 
+  margin: 0; 
+  padding: 0; 
 }
+
 
 .calendar table {
   width: 100%;
-  border-collapse: collapse;
-  text-align: center;
+  border-collapse: collapse; 
 }
+
+
 
 .calendar th {
-  background-color: #c4c4c4;
-  color: white;
-  padding: 10px;
+  height: 25px;  
 }
 
+// 날짜 칸 설정
 .calendar td {
-  border: 1px solid #ccc;
-  height: 40px;
+  height: 55px;
+  // 날짜 위치 지정 때문에 설정함
+  position: relative; 
+  background-color: #ffffff;
+  color: #000000;
+  border: 1px solid #000000;  
 }
 
-.calendar td.empty {
-  background-color: #f4f4f4;
+.calendar td p {
+  position: absolute;
+  top: 2px; 
+  right: 5px; 
+  text-align: right;
+  margin: 0; 
+
+}
+
+
+// 요일 별 색...
+$mondayColor: #D2D2D2;
+$tuesdayColor: #B5B5B5;
+$wednesdayColor: #9F9F9F;
+$thursdayColor: #808080;
+$fridayColor: #6F6F6F;
+$saturdayColor: #515151;
+$sundayColor: #3C3C3C;
+$textColor: #000000;
+
+// 요일 칸 css 색 적용
+.calendar th:nth-child(1) {
+  background-color: $mondayColor;
+}
+
+.calendar th:nth-child(2) {
+  background-color: $tuesdayColor;
+}
+
+.calendar th:nth-child(3) {
+  background-color: $wednesdayColor; 
+}
+
+.calendar th:nth-child(4) {
+  background-color: $thursdayColor; 
+}
+
+.calendar th:nth-child(5) {
+  background-color: $fridayColor; 
+}
+
+.calendar th:nth-child(6) {
+  background-color: $saturdayColor; 
+}
+
+.calendar th:nth-child(7) {
+  background-color: $sundayColor; 
+}
+
+
+
+.buttonDiv {
+  display: flex;
+  justify-content: flex-end
 }
 
 .problemButton {
-  background-color: $buttonColor;
-  color: black;
-  padding: 10px 20px;
-  border: none;
+  background-color: $selectedColor;
   border-radius: $borderRadius;
-  cursor: pointer;
+  padding: 10px 40px;
+  border: none;
   font-size: 16px;
+  cursor: pointer;
 }
 
 .problemButton:hover {
-  background-color: lighten($buttonColor, 10%);
+  background-color: $selectedColor;
 }
