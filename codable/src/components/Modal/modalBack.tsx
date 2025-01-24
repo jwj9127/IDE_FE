@@ -2,31 +2,34 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./modal.scss";
 
-const ModalBack: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
-    isOpen,
-    onClose,
-}) => {
-    const [animation, setAnimation] = useState("slide-in");
+interface ModalBackProps {
+    isOpen: boolean;
+    onClose: () => void;
+}
+
+const ModalBack: React.FC<ModalBackProps> = ({ isOpen, onClose }) => {
+    const [animation, setAnimation] = useState<"slide-in" | "slide-out">(
+        "slide-in"
+    );
     const navigate = useNavigate();
 
     useEffect(() => {
-        // 모달이 열릴 때 항상 "slide-in" 상태로 초기화
         if (isOpen) {
             setAnimation("slide-in");
         }
     }, [isOpen]);
 
-    const handleClose = () => {
-        setAnimation("slide-out"); // 사라지는 애니메이션 실행
-        setTimeout(onClose, 500); // 애니메이션 시간 이후 모달 닫기
+    const handleClose = (): void => {
+        setAnimation("slide-out");
+        setTimeout(onClose, 500);
     };
 
-    const handleNavigateToStudy = () => {
-        setAnimation("slide-out"); // 사라지는 애니메이션 실행
+    const handleNavigateToStudy = (): void => {
+        setAnimation("slide-out");
         setTimeout(() => {
-            navigate("/study"); // /study 경로로 이동
-            onClose(); // 모달 닫기
-        }, 500); // 애니메이션 완료 후 동작
+            onClose();
+            navigate("/study");
+        }, 500);
     };
 
     return isOpen ? (
