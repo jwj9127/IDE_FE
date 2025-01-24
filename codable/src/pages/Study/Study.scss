@@ -21,6 +21,13 @@ $fridayColor: #6f6f6f;
 $saturdayColor: #515151;
 $sundayColor: #3c3c3c;
 
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 90vh;
+}
+
 .frame {
     display: flex;
     flex-direction: column;

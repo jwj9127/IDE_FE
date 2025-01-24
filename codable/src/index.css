@@ -11,3 +11,14 @@ code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
         monospace;
 }
+
+/* index.css */
+body,
+html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #282b2f; /* 원하는 배경색 */
+    font-family: Arial, sans-serif; /* 기본 폰트 */
+}

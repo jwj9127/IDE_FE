@@ -4,7 +4,7 @@
 
     .editor {
         background-color: #1e1e1e;
-        height: 95%;
+        height: 92%;
         padding: 16px 0;
         box-sizing: border-box;
     }
@@ -13,9 +13,11 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 5%;
+        height: 8%;
         background-color: #2f2f2f;
         color: #ffffff;
         font-size: 24px;
+        box-sizing: border-box;
+        padding: 13px;
     }
 }
