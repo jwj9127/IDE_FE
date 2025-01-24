@@ -1,0 +1,88 @@
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-color: #f5f5f5;
+  
+    // 헤더 스타일
+    .chat-header {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      background-color: #333;
+      color: white;
+  
+      .logo {
+        height: 40px; // 로고 크기
+      }
+    }
+  
+    // 채팅 메시지 박스 스타일
+    .chat-box {
+      flex: 1; // 세로로 공간을 채움
+      padding: 10px;
+      overflow-y: auto; // 스크롤 가능
+      display: flex;
+      flex-direction: column;
+  
+      .chat-message {
+        margin-bottom: 10px;
+        max-width: 70%;
+        padding: 10px;
+        border-radius: 8px;
+  
+        .nickname {
+          font-size: 0.85rem; // 닉네임 폰트 크기
+          margin-bottom: 5px;
+          font-weight: bold;
+        }
+  
+        p {
+          margin: 0;
+        }
+      }
+  
+      // 내가 보낸 메시지 스타일
+      .my-message {
+        align-self: flex-end;
+        background-color: #d1e7dd;
+        color: #0f5132;
+      }
+  
+      // 상대방 메시지 스타일
+      .other-message {
+        align-self: flex-start;
+        background-color: #f8d7da;
+        color: #842029;
+      }
+    }
+  
+    // 하단 입력 및 버튼 스타일
+    .chat-footer {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      background-color: #fff;
+      border-top: 1px solid #ddd;
+  
+      input {
+        flex: 1; // 입력 필드가 남은 공간을 채움
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        margin-right: 10px;
+      }
+  
+      button {
+        padding: 10px;
+        border: none;
+        cursor: pointer;
+        background: none;
+  
+        // 나가기 버튼 스타일
+        &.exit-button img {
+          height: 30px; // 아이콘 크기
+        }
+      }
+    }
+  }
