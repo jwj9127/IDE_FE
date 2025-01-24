@@ -110,7 +110,7 @@ body {
   font-size: 14px;
   color: $textColor;
   width: 400px;
-  background-color: #e8e8e8;
+  background-color: $calendarBackgroundColor; 
   border-radius: $borderRadius;
   overflow: hidden; 
 
@@ -173,7 +173,7 @@ body {
     td {
       height: 55px;
       position: relative;
-      background-color: #ffffff;
+      background-color: $calendarBackgroundColor;
       color: #000000;
       border: 1px solid #000000;
 
