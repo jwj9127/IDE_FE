@@ -1,207 +1,201 @@
 // 배경 색
-$bodyBackgroundColor: #282B2F;
-$divBackgroundColor: #E3E3E3;
+$bodyBackgroundColor: #282b2f;
+$divBackgroundColor: #e3e3e3;
 $borderRadius: 16px;
 $buttonColor: #c4c4c4;
-$selectedColor: #8B8B8B;
+$selectedColor: #8b8b8b;
 
 // 글자 색
 $textColor: #000000;
 
 // 달력 색
-$calendarBackgroundColor: #F5F5F5; // 날짜 배경 색깔
-$calendarHeaderColor: #E8E8E8; // 1월 칸 색깔
+$calendarBackgroundColor: #f5f5f5; // 날짜 배경 색깔
+$calendarHeaderColor: #e8e8e8; // 1월 칸 색깔
 
 // 요일 별 색
-$mondayColor: #D2D2D2;
-$tuesdayColor: #B5B5B5;
-$wednesdayColor: #9F9F9F;
+$mondayColor: #d2d2d2;
+$tuesdayColor: #b5b5b5;
+$wednesdayColor: #9f9f9f;
 $thursdayColor: #808080;
-$fridayColor: #6F6F6F;
+$fridayColor: #6f6f6f;
 $saturdayColor: #515151;
-$sundayColor: #3C3C3C;
+$sundayColor: #3c3c3c;
 
-html, body {
-  height: 100%;
-  margin: 0;
-}
-
-body {
-  background-color: $bodyBackgroundColor;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.frame {
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
-
-  > p {
-    color: #d8d8d8;
-    font-size: 18px;
-  }
-}
-
-.innerFrame {
-  display: flex;
-  gap: 20px;
-  justify-content: space-between;
-  align-items: center;
-  width: 1200px;
-  height: 340px;
-}
-
-.membersFrame {
-  display: flex;
-  flex-direction: column;
-  gap: 25px;
-  height: 100%;
-}
-
-.memberDiv {
-  background-color: $divBackgroundColor;
-  padding: 21px;
-  border-radius: $borderRadius;
-  display: flex;
-  align-items: center;
-  width: 250px;
-
-  &:hover {
-    background-color: $selectedColor;
-  }
-
-  > img {
-    max-width: 50px;
-    max-height: 50px;
-    margin-right: 20px;
-  }
-}
-
-.rulesText {
-  background-color: $divBackgroundColor;
-  border-radius: $borderRadius;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-
-  > p {
-    margin-top: 30px;
-    padding-left: 20px;
-  }
-}
-
-.subText {
-  padding-left: 20px;
-  padding-right: 40px;
-  margin-top: 20px;
-}
-
-.calendarFrame {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 100%;
-  background-color: transparent;
-}
-
-.calendar {
-  font-size: 14px;
-  color: $textColor;
-  width: 400px;
-  background-color: $calendarBackgroundColor; 
-  border-radius: $borderRadius;
-  overflow: hidden; 
-
-
-  header {
-    background-color: $calendarHeaderColor;
-    border-radius: $borderRadius;
-    height: 25px;
+.container {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0;
-    margin: 0;
+    height: 90vh;
+}
 
-    p {
-      text-align: center;
-      height: 100%;
-      line-height: 25px;
-      margin: 0;
-      padding: 0;
+.frame {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+
+    > p {
+        color: #d8d8d8;
+        font-size: 18px;
     }
-  }
+}
 
-  table {
-    width: 100%;
-    border-collapse: collapse;
+.innerFrame {
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+    align-items: center;
+    width: 1200px;
+    height: 340px;
+}
 
-    th {
-      height: 25px;
+.membersFrame {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    height: 100%;
+}
 
-      &:nth-child(1) {
-        background-color: $mondayColor;
-      }
+.memberDiv {
+    background-color: $divBackgroundColor;
+    padding: 21px;
+    border-radius: $borderRadius;
+    display: flex;
+    align-items: center;
+    width: 250px;
 
-      &:nth-child(2) {
-        background-color: $tuesdayColor;
-      }
-
-      &:nth-child(3) {
-        background-color: $wednesdayColor;
-      }
-
-      &:nth-child(4) {
-        background-color: $thursdayColor;
-      }
-
-      &:nth-child(5) {
-        background-color: $fridayColor;
-      }
-
-      &:nth-child(6) {
-        background-color: $saturdayColor;
-      }
-
-      &:nth-child(7) {
-        background-color: $sundayColor;
-      }
+    &:hover {
+        background-color: $selectedColor;
     }
 
-    td {
-      height: 55px;
-      position: relative;
-      background-color: $calendarBackgroundColor;
-      color: #000000;
-      border: 1px solid #000000;
+    > img {
+        max-width: 50px;
+        max-height: 50px;
+        margin-right: 20px;
+    }
+}
 
-      p {
-        position: absolute;
-        top: 2px;
-        right: 5px;
-        text-align: right;
+.rulesText {
+    background-color: $divBackgroundColor;
+    border-radius: $borderRadius;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    > p {
+        margin-top: 30px;
+        padding-left: 20px;
+    }
+}
+
+.subText {
+    padding-left: 20px;
+    padding-right: 40px;
+    margin-top: 20px;
+}
+
+.calendarFrame {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    background-color: transparent;
+}
+
+.calendar {
+    font-size: 14px;
+    color: $textColor;
+    width: 400px;
+    background-color: $calendarBackgroundColor;
+    border-radius: $borderRadius;
+    overflow: hidden;
+
+    header {
+        background-color: $calendarHeaderColor;
+        border-radius: $borderRadius;
+        height: 25px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
         margin: 0;
-      }
+
+        p {
+            text-align: center;
+            height: 100%;
+            line-height: 25px;
+            margin: 0;
+            padding: 0;
+        }
     }
-  }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+
+        th {
+            height: 25px;
+
+            &:nth-child(1) {
+                background-color: $mondayColor;
+            }
+
+            &:nth-child(2) {
+                background-color: $tuesdayColor;
+            }
+
+            &:nth-child(3) {
+                background-color: $wednesdayColor;
+            }
+
+            &:nth-child(4) {
+                background-color: $thursdayColor;
+            }
+
+            &:nth-child(5) {
+                background-color: $fridayColor;
+            }
+
+            &:nth-child(6) {
+                background-color: $saturdayColor;
+            }
+
+            &:nth-child(7) {
+                background-color: $sundayColor;
+            }
+        }
+
+        td {
+            height: 55px;
+            position: relative;
+            background-color: $calendarBackgroundColor;
+            color: #000000;
+            border: 1px solid #000000;
+
+            p {
+                position: absolute;
+                top: 2px;
+                right: 5px;
+                text-align: right;
+                margin: 0;
+            }
+        }
+    }
 }
 
 .buttonDiv {
-  display: flex;
-  justify-content: flex-end;
+    display: flex;
+    justify-content: flex-end;
 }
 
 .problemButton {
-  background-color: $selectedColor;
-  border-radius: $borderRadius;
-  padding: 10px 40px;
-  border: none;
-  font-size: 16px;
-  cursor: pointer;
-
-  &:hover {
     background-color: $selectedColor;
-  }
+    border-radius: $borderRadius;
+    padding: 10px 40px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: $selectedColor;
+    }
 }
