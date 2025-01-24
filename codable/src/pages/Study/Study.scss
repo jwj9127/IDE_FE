@@ -8,6 +8,18 @@ $selectedColor: #8B8B8B;
 // 글자 색
 $textColor: #000000;
 
+// 달력 색
+$calendarBackgroundColor: #F5F5F5; // 날짜 배경 색깔
+$calendarHeaderColor: #E8E8E8; // 1월 칸 색깔
+
+// 요일 별 색
+$mondayColor: #D2D2D2;
+$tuesdayColor: #B5B5B5;
+$wednesdayColor: #9F9F9F;
+$thursdayColor: #808080;
+$fridayColor: #6F6F6F;
+$saturdayColor: #515151;
+$sundayColor: #3C3C3C;
 
 html, body {
   height: 100%;
@@ -16,29 +28,27 @@ html, body {
 
 body {
   background-color: $bodyBackgroundColor;
-  display: flex;       
-  /* 가운데 정렬 */        
-  justify-content: center;    
-  align-items: center;         
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .frame {
   display: flex;
-  flex-direction: column;  
+  flex-direction: column;
   gap: 40px;
-}
 
-
-.frame > p {
-  color: #d8d8d8;
-  font-size: 18px;
+  > p {
+    color: #d8d8d8;
+    font-size: 18px;
+  }
 }
 
 .innerFrame {
   display: flex;
   gap: 20px;
-  justify-content: space-between; 
-  align-items: center;  
+  justify-content: space-between;
+  align-items: center;
   width: 1200px;
   height: 340px;
 }
@@ -46,7 +56,7 @@ body {
 .membersFrame {
   display: flex;
   flex-direction: column;
-  gap: 25px; // 각 멤버 간 간격
+  gap: 25px;
   height: 100%;
 }
 
@@ -58,16 +68,15 @@ body {
   align-items: center;
   width: 250px;
 
-}
+  &:hover {
+    background-color: $selectedColor;
+  }
 
-.memberDiv:hover {
-  background-color: $selectedColor;
-}
-
-.memberDiv > img {
-  max-width: 50px;
-  max-height: 50px;
-  margin-right: 20px;
+  > img {
+    max-width: 50px;
+    max-height: 50px;
+    margin-right: 20px;
+  }
 }
 
 .rulesText {
@@ -75,12 +84,12 @@ body {
   border-radius: $borderRadius;
   height: 100%;
   display: flex;
-  flex-direction: column; 
-}
+  flex-direction: column;
 
-.rulesText>p {
-  margin-top: 30px;
-  padding-left: 20px;
+  > p {
+    margin-top: 30px;
+    padding-left: 20px;
+  }
 }
 
 .subText {
@@ -88,11 +97,6 @@ body {
   padding-right: 40px;
   margin-top: 20px;
 }
-
-// 달력 색...
-$calendarBackgroundColor: #F5F5F5; // 날짜 배경 색깔
-$calendarHeaderColor: #E8E8E8; // 1월 칸 색깔
-
 
 .calendarFrame {
   display: flex;
@@ -102,111 +106,91 @@ $calendarHeaderColor: #E8E8E8; // 1월 칸 색깔
   background-color: transparent;
 }
 
-
-
 .calendar {
   font-size: 14px;
   color: $textColor;
   width: 400px;
   background-color: #e8e8e8;
   border-radius: $borderRadius;
+  overflow: hidden; 
+
+
+  header {
+    background-color: $calendarHeaderColor;
+    border-radius: $borderRadius;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+
+    p {
+      text-align: center;
+      height: 100%;
+      line-height: 25px;
+      margin: 0;
+      padding: 0;
+    }
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th {
+      height: 25px;
+
+      &:nth-child(1) {
+        background-color: $mondayColor;
+      }
+
+      &:nth-child(2) {
+        background-color: $tuesdayColor;
+      }
+
+      &:nth-child(3) {
+        background-color: $wednesdayColor;
+      }
+
+      &:nth-child(4) {
+        background-color: $thursdayColor;
+      }
+
+      &:nth-child(5) {
+        background-color: $fridayColor;
+      }
+
+      &:nth-child(6) {
+        background-color: $saturdayColor;
+      }
+
+      &:nth-child(7) {
+        background-color: $sundayColor;
+      }
+    }
+
+    td {
+      height: 55px;
+      position: relative;
+      background-color: #ffffff;
+      color: #000000;
+      border: 1px solid #000000;
+
+      p {
+        position: absolute;
+        top: 2px;
+        right: 5px;
+        text-align: right;
+        margin: 0;
+      }
+    }
+  }
 }
-
-.calendar header {
-  background-color: $calendarHeaderColor;
-  border-radius: $borderRadius;
-  height: 25px; 
-  display: flex; 
-  align-items: center; 
-  justify-content: center; 
-  padding: 0; 
-  margin: 0; 
-}
-
-.calendar header p {
-  text-align: center;
-  height: 100%; 
-  line-height: 25px; 
-  margin: 0; 
-  padding: 0; 
-}
-
-
-.calendar table {
-  width: 100%;
-  border-collapse: collapse; 
-}
-
-
-
-.calendar th {
-  height: 25px;  
-}
-
-// 날짜 칸 설정
-.calendar td {
-  height: 55px;
-  // 날짜 위치 지정 때문에 설정함
-  position: relative; 
-  background-color: #ffffff;
-  color: #000000;
-  border: 1px solid #000000;  
-}
-
-.calendar td p {
-  position: absolute;
-  top: 2px; 
-  right: 5px; 
-  text-align: right;
-  margin: 0; 
-
-}
-
-
-// 요일 별 색...
-$mondayColor: #D2D2D2;
-$tuesdayColor: #B5B5B5;
-$wednesdayColor: #9F9F9F;
-$thursdayColor: #808080;
-$fridayColor: #6F6F6F;
-$saturdayColor: #515151;
-$sundayColor: #3C3C3C;
-$textColor: #000000;
-
-// 요일 칸 css 색 적용
-.calendar th:nth-child(1) {
-  background-color: $mondayColor;
-}
-
-.calendar th:nth-child(2) {
-  background-color: $tuesdayColor;
-}
-
-.calendar th:nth-child(3) {
-  background-color: $wednesdayColor; 
-}
-
-.calendar th:nth-child(4) {
-  background-color: $thursdayColor; 
-}
-
-.calendar th:nth-child(5) {
-  background-color: $fridayColor; 
-}
-
-.calendar th:nth-child(6) {
-  background-color: $saturdayColor; 
-}
-
-.calendar th:nth-child(7) {
-  background-color: $sundayColor; 
-}
-
-
 
 .buttonDiv {
   display: flex;
-  justify-content: flex-end
+  justify-content: flex-end;
 }
 
 .problemButton {
@@ -216,8 +200,8 @@ $textColor: #000000;
   border: none;
   font-size: 16px;
   cursor: pointer;
-}
 
-.problemButton:hover {
-  background-color: $selectedColor;
+  &:hover {
+    background-color: $selectedColor;
+  }
 }

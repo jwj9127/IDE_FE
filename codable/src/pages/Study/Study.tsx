@@ -1,19 +1,40 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './Study.scss';
-import memberImage from './img/memberImage.png';
+
+type Member = {
+  image: string;
+  name: string;
+};
+
+const fetchKakaoMembers = async (): Promise<Member[]> => {
+  // TODO: 카카오 API로부터 멤버 데이터를 받아오는 로직 추가 필요
+  // 우선은 return 값은 mock data로 예상해서 넣어둠
+  return [
+    { image: 'https://via.placeholder.com/50', name: '홍길동' },
+    { image: 'https://via.placeholder.com/50', name: '김철수' },
+    { image: 'https://via.placeholder.com/50', name: '이영희' },
+  ];
+};
 
 const Study: React.FC = () => {
-  const name: string = "&&";
+  const [members, setMembers] = useState<Member[]>([]);
 
-  // 현재 날짜와 월 정보를 가져오기
+  useEffect(() => {
+    const loadMembers = async () => {
+      const data = await fetchKakaoMembers();
+      setMembers(data);
+    };
+
+    loadMembers();
+  }, []);
+
   const now = new Date();
   const year = now.getFullYear();
-  const month = now.getMonth(); // 0부터 시작 (0: 1월)
-  const firstDay = new Date(year, month, 1).getDay(); // 이번 달의 첫 번째 요일
-  const lastDate = new Date(year, month + 1, 0).getDate(); // 이번 달의 마지막 날짜
+  const month = now.getMonth();
+  const firstDay = new Date(year, month, 1).getDay();
+  const lastDate = new Date(year, month + 1, 0).getDate();
 
-  // 달력 데이터를 생성
-  const calendar: (number | null)[] = Array(firstDay).fill(null).concat(
+  const calendar = Array(firstDay).fill(null).concat(
     Array.from({ length: lastDate }, (_, i) => i + 1)
   );
 
@@ -23,10 +44,10 @@ const Study: React.FC = () => {
       <div className="innerFrame">
         {/* 멤버 섹션 */}
         <div className="membersFrame">
-          {[...Array(3)].map((_, idx) => (
+          {members.map((member, idx) => (
             <div className="memberDiv" key={idx}>
-              <img src={memberImage} alt="Member" />
-              <p>{name}님</p>
+              <img src={member.image} alt="Member" />
+              <p>{member.name}님</p>
             </div>
           ))}
         </div>
@@ -43,7 +64,7 @@ const Study: React.FC = () => {
           </div>
         </div>
 
-        {/* 달력 섹션 {year}년 */}
+        {/* 달력 섹션 */}
         <div className="calendarFrame">
           <div className="calendar">
             <header>
@@ -72,7 +93,7 @@ const Study: React.FC = () => {
           </div>
         </div>
       </div>
-      <div className='buttonDiv'>
+      <div className="buttonDiv">
         <button className="problemButton">문제 풀기</button>
       </div>
     </div>
