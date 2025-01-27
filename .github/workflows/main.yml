@@ -29,13 +29,6 @@ jobs:
 
       - name: 경고 무시 후 빌드
         run: CI=false npm run build
-
-      - name: Deploy
-        run: ./deploy_script.sh
-        env:
-          REACT_APP_API_KEY: ${{ secrets.REACT_APP_API_KEY }}
-          REACT_APP_REDIRECT_URI: ${{ secrets.REACT_APP_REDIRECT_URI }}
-          BASE_URL: ${{ secrets.BASE_URL }}
         
       - name: SSH 키 저장
         run: |
