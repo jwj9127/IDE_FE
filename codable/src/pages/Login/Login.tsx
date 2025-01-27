@@ -14,10 +14,22 @@ const Login: React.FC = () => {
   return (
     <div className={styles.loginContainer}>
       <div className={styles.background}>
-        <img src={loginImage1} alt="Background" className={styles.backgroundImage} />
-        <img src={loginImage2} alt="Background" className={styles.backgroundImage} />
+        <img
+          src={loginImage1}
+          alt="Background 1"
+          className={styles.backgroundImage1}
+        />
+        <img
+          src={loginImage2}
+          alt="Background 2"
+          className={styles.backgroundImage2}
+        />
       </div>
-      <button type="button" onClick={loginHandler} className={styles.kakaoButton}>
+      <button
+        type="button"
+        onClick={loginHandler}
+        className={styles.kakaoButton}
+      >
         카카오톡으로 시작하기
       </button>
     </div>
