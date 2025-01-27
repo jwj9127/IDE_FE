@@ -1,3 +1,6 @@
+$buttonColor: #FEE500;
+$textColor: #282b2f;
+
 .frame {
     display: flex;
     flex-direction: column;
@@ -5,4 +8,14 @@
 
 .innerFrame {
     display: flex;
+}
+
+.frame > button {
+    color: $textColor;
+    background-color: $buttonColor;
+    border-radius: 16px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
