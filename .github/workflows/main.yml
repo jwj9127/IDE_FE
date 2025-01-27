@@ -27,11 +27,8 @@ jobs:
       - name: 의존성 설치
         run: npm install
 
-      - name: 경고 무시
+      - name: 경고 무시 후 빌드
         run: CI=false npm run build
-
-      - name: 빌드
-        run: npm run build
 
       - name: Deploy
         run: ./deploy_script.sh
