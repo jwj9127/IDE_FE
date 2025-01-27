@@ -55,6 +55,6 @@ jobs:
               docker stop quirky_benz || true
               docker rm quirky_benz || true
               docker pull  jwj9127/front:latest
-              docker run -d --name quirky_benz -p 80:80 jwj9127/front:latest
+              docker run -d --name quirky_benz -p 81:81 jwj9127/front:latest
           EOF
 
