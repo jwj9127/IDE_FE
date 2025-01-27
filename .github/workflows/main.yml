@@ -24,9 +24,6 @@ jobs:
           echo "REACT_APP_REDIRECT_URI=${{ secrets.REACT_APP_REDIRECT_URI }}" >> .env
           echo "BASE_URL=${{ secrets.BASE_URL }}" >> .env
 
-      - name: 권한 부여
-        run: chmod +x npm
-
       - name: 의존성 설치
         run: npm install
 
