@@ -1,0 +1,64 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Code Checkout
+        uses: actions/checkout@v3
+
+      - name: Node.js 설정
+        uses: actions/setup-node@v2
+        with:
+          node-version: '22.x'
+
+      - name: Create .env file
+        run: |
+          echo "REACT_APP_API_KEY=${{ secrets.REACT_APP_API_KEY }}" > .env
+          echo "REACT_APP_REDIRECT_URI=${{ secrets.REACT_APP_REDIRECT_URI }}" >> .env
+          echo "BASE_URL=${{ secrets.BASE_URL }}" >> .env
+
+      - name: 권한 부여
+        run: chmod +x gradlew
+
+      - name: 의존성 설치
+        run: npm install
+
+      - name: 빌드
+        run: npm run build
+
+      - name: Deploy
+        run: ./deploy_script.sh
+        env:
+          REACT_APP_API_KEY: ${{ secrets.REACT_APP_API_KEY }}
+          REACT_APP_REDIRECT_URI: ${{ secrets.REACT_APP_REDIRECT_URI }}
+          BASE_URL: ${{ secrets.BASE_URL }}
+        
+      - name: SSH 키 저장
+        run: |
+          echo "${{ secrets.JWJ }}" > JWJ.pem
+          chmod 600 JWJ.pem
+
+      - name: 도커 로그인
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+      - name: 이미지 build, push
+        run: |
+          docker build -t jwj9127/front:latest .
+          docker push jwj9127/test:latest
+
+      - name: Docker 이미지 빌드 및 배포
+        run: |
+          ssh -i JWJ.pem -T ubuntu@ec2-3-34-197-183.ap-northeast-2.compute.amazonaws.com << 'EOF'
+              docker stop quirky_benz || true
+              docker rm quirky_benz || true
+              docker pull  jwj9127/front:latest
+              docker run -d --name quirky_benz -p 80:80 jwj9127/front:latest
+          EOF
+
