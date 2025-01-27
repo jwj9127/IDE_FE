@@ -1,6 +1,6 @@
 import React from "react";
-import loginImage1 from "../../assets/logo.png";
-import loginImage2 from "../../assets/logo.png";
+import loginImage1 from "../../assets/loginPage1.png";
+import loginImage2 from "../../assets/loginPage2.png";
 
 const Login: React.FC = () => {
 
