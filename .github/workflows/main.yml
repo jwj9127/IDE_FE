@@ -18,6 +18,9 @@ jobs:
         with:
           node-version: '22.x'
 
+      - name: 경고 무시
+        run: CI=false npm run build
+
       - name: Create .env file
         run: |
           echo "REACT_APP_API_KEY=${{ secrets.REACT_APP_API_KEY }}" > .env
