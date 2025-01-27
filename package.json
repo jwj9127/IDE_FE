@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@stomp/stompjs": "^7.0.0",
+    "axios": "^1.7.9",
     "cra-template-typescript": "1.2.0",
     "install": "^0.13.0",
     "npm": "^11.0.0",
