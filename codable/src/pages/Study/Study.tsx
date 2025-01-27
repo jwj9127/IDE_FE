@@ -16,7 +16,7 @@ const fetchKakaoMembers = async (): Promise<Member[]> => {
     ];
 };
 
-const Study: React.FC = () => {
+const Study: React.FC = () => { // React.FC 타입지정 불필요
     const [members, setMembers] = useState<Member[]>([]);
 
     useEffect(() => {
@@ -126,7 +126,7 @@ const Study: React.FC = () => {
                     </div>
                 </div>
                 <div className="buttonDiv">
-                    <button className="problemButton">문제 풀기</button>
+                    <button type="button" className="problemButton">문제 풀기</button>
                 </div>
             </div>
         </div>
