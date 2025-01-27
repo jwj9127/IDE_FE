@@ -1,4 +1,6 @@
 import React from "react";
+import loginImage1 from "../../assets/logo.png";
+import loginImage2 from "../../assets/logo.png";
 
 const Login: React.FC = () => {
 
@@ -9,9 +11,15 @@ const Login: React.FC = () => {
       };
 
       return (
-        <button type='button' onClick={loginHandler}>
+        <div className="frame">
+          <div className="innerFrame">
+            <img src = {loginImage1} />
+            <img src = {loginImage2} />
+          </div>
+          <button type='button' onClick={loginHandler}>
           카카오톡으로 시작하기
-        </button>
+          </button>
+        </div>
       );
 };
 
