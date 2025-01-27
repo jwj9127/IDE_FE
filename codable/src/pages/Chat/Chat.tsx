@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import deleteIcon from '../../assets/delete.png';
 import "./Chat.scss";
 
 const Chat: React.FC = () => {
@@ -28,19 +30,16 @@ const Chat: React.FC = () => {
   return (
     <div className="chat-container">
       {/* 상단 헤더 */}
-      <header className="chat-header">
-        <img src="logo.png" alt="Logo" className="logo" />
-      </header>
-
+        <div className="chat-ground">
       {/* 채팅 메시지 박스 */}
-      <div className="chat-box">
-        {messages.map((msg, index) => (
-          <div
+        <div className="chat-box">
+          {messages.map((msg, index) => (
+            <div
             key={index}
             className={`chat-message ${
               msg.user === userNickname ? "my-message" : "other-message"
             }`}
-          >
+            >
             {/* 닉네임 표시 */}
             <span className="nickname">{msg.user}</span>
             <p>{msg.text}</p>
@@ -56,13 +55,16 @@ const Chat: React.FC = () => {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
-        />
+          />
         <button onClick={sendMessage}>보내기</button>
-        <button className="exit-button" onClick={handleExit}>
-          <img src="delete.png" alt="나가기" />
-        </button>
       </footer>
     </div>
+    <div className="deleteIcon">
+                <Link to="/study">
+                    <img src={deleteIcon} alt="delete" className="delete-image"/>
+                </Link>
+            </div>
+  </div>
   );
 };
 
