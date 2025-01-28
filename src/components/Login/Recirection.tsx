@@ -13,7 +13,9 @@ const Recirection: React.FC = () => {
   useEffect(() => {
     axios({
       method: "post",
-      url: `https://kauth.kakao.com/oauth/token?grant_type=authorization_code&cliende=${code}`,
+      // url: `https://kauth.kakao.com/oauth/token?grant_type=authorization_code&cliende=${code}`,
+      url: `https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id=${process.env.REACT_APP_API_KEY}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}&code=${code}`,
+
     }).then((result) => {
       setAccessToken(result.data.access_token);
     });
@@ -22,7 +24,8 @@ const Recirection: React.FC = () => {
       method: "get",
       url: " https://kapi.kakao.com/v2/user/me",
       headers: {
-        Authorization: `Bearer${accessToken}`,
+        // Authorization: `Bearer${accessToken}`,
+        Authorization: `Bearer ${accessToken}`,
         "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
       },
     }).then((result) => {
