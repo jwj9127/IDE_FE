@@ -1,0 +1,13 @@
+$question-bg: #f4f4f4;
+
+.question {
+    background-color: $question-bg;
+    overflow-y: auto;
+    overflow-x: hidden;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    width: 100%;
+    height: 100%;
+}
