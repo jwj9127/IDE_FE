@@ -1,7 +1,6 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { KakaoUserInfoRequestDto } from "./KakaoUserInfoRequestDto";
-
 
 const Recirection: React.FC = () => {
   const code = new URL(document.location.toString()).searchParams.get("code");
@@ -10,46 +9,41 @@ const Recirection: React.FC = () => {
   const [name, setName] = useState<any>();
   const [email, setEmail] = useState<any>();
 
-  useEffect(() => {
-    axios({
-      method: "post",
-      // url: `https://kauth.kakao.com/oauth/token?grant_type=authorization_code&cliende=${code}`,
-      url: `https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id=${process.env.REACT_APP_API_KEY}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}&code=${code}`,
+  axios({
+    method: "post",
+    url: `https://kauth.kakao.com/oauth/token?grant_type=authorization_code&cliende=${code}`,
+  }).then((result) => {
+    setAccessToken(result.data.access_token);
+  });
 
-    }).then((result) => {
-      setAccessToken(result.data.access_token);
-    });
+  axios({
+    method: "get",
+    url: " https://kapi.kakao.com/v2/user/me",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
+    },
+  }).then((result) => {
+    setId(result.data.id);
+    setName(result.data.properties.nickname);
+    setEmail(result.data.kakao_account.email);
+  });
 
-    axios({
-      method: "get",
-      url: " https://kapi.kakao.com/v2/user/me",
-      headers: {
-        // Authorization: `Bearer${accessToken}`,
-        Authorization: `Bearer ${accessToken}`,
-        "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
-      },
-    }).then((result) => {
-      setId(result.data.id);
-      setName(result.data.properties.nickname);
-      setEmail(result.data.kakao_account.email);
-    });
+  const kakaoUserInfo: KakaoUserInfoRequestDto = {
+    id,
+    name,
+    email,
+  };
 
-    const kakaoUserInfo: KakaoUserInfoRequestDto = {
-      id,
-      name,
-      email,
-    };
-
-    axios({
-      method: "post",
-      url: "/api/login/kakao",
-      data: kakaoUserInfo,
-    }).then((result) => {
-      if (result.data.code === 201) {
-        localStorage.setItem("token", result.data.data.jwtToken);
-      }
-    });
-  }, [code]);
+  axios({
+    method: "post",
+    url: "/api/login/kakao",
+    data: kakaoUserInfo,
+  }).then((result) => {
+    if (result.data.code === 201) {
+      localStorage.setItem("token", result.data.data.jwtToken);
+    }
+  });
 
   return <></>;
 };
