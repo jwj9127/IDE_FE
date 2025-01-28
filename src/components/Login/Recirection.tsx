@@ -4,10 +4,10 @@ import { KakaoUserInfoRequestDto } from "./KakaoUserInfoRequestDto";
 
 const Recirection: React.FC = () => {
   const code = new URL(document.location.toString()).searchParams.get("code");
-  const [accessToken, setAccessToken] = useState<any>();
-  const [id, setId] = useState<any>();
-  const [name, setName] = useState<any>();
-  const [email, setEmail] = useState<any>();
+  const [accessToken, setAccessToken] = useState<any>(null);
+  const [id, setId] = useState<any>(null);
+  const [name, setName] = useState<any>(null);
+  const [email, setEmail] = useState<any>(null);
 
   axios({
     method: "post",
