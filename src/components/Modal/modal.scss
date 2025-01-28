@@ -1,0 +1,118 @@
+$modal-bg: rgba(0, 0, 0, 0.5);
+$modal-color: #000000;
+$modal-wrap: #d9d9d9;
+
+@keyframes slideUp {
+    from {
+        transform: translateY(100vh);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(100vh);
+        opacity: 0;
+    }
+}
+
+.modal-overlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: $modal-bg;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-space {
+    width: 100vw;
+    height: 100dvh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    &.slide-in {
+        animation: slideUp 0.5s ease-out forwards;
+    }
+
+    &.slide-out {
+        animation: slideDown 0.5s ease-out forwards;
+    }
+
+    .modal-wrap {
+        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+        border-radius: 20px;
+        width: 250px;
+        height: 120px;
+        z-index: 2;
+        background-color: $modal-wrap;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .modal-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        .modal-text {
+            font-size: 15px;
+            font-weight: 600;
+            line-height: 17.9px;
+            text-align: center;
+            margin-top: 15px;
+            color: $modal-color;
+            white-space: pre-line;
+        }
+
+        .modal-close {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+
+            .close-btn {
+                width: 93px;
+                height: 36px;
+                border-radius: 15px;
+                border: 1px solid $modal-color;
+                color: $modal-color;
+                cursor: pointer;
+                font-size: 15px;
+                font-weight: 600;
+                line-height: 17.9px;
+                text-align: center;
+
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                transition: all 300ms ease-out;
+
+                &:hover {
+                    background-color: $modal-color;
+                    color: #fff;
+                }
+            }
+        }
+    }
+}

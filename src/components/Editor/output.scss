@@ -1,0 +1,30 @@
+$output-bg: #545454;
+$output-color: #ffffff;
+
+.output {
+    box-sizing: border-box;
+    height: 30%;
+    width: 100%;
+    background-color: $output-bg;
+    color: $output-color;
+    padding: 16px 24px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .content {
+        width: 93%;
+    }
+
+    .btn {
+        width: 7%;
+        height: 24px;
+        color: #ffffff;
+        font-size: 16px;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        border: 0;
+        background-color: transparent;
+    }
+}
