@@ -1,36 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useModal } from "../../hooks/useModal";
+import { ModalProps } from "./modal.types";
 import "./modal.scss";
 
-interface ModalBackProps {
-    isOpen: boolean;
-    onClose: () => void;
-}
-
-const ModalBack: React.FC<ModalBackProps> = ({ isOpen, onClose }) => {
-    const [animation, setAnimation] = useState<"slide-in" | "slide-out">(
-        "slide-in"
-    );
+const ModalBack: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     const navigate = useNavigate();
 
-    useEffect(() => {
-        if (isOpen) {
-            setAnimation("slide-in");
-        }
-    }, [isOpen]);
-
-    const handleClose = (): void => {
-        setAnimation("slide-out");
-        setTimeout(onClose, 500);
-    };
-
-    const handleNavigateToStudy = (): void => {
-        setAnimation("slide-out");
-        setTimeout(() => {
-            onClose();
-            navigate("/study");
-        }, 500);
-    };
+    const { animation, handleClose, handleNavigate } = useModal(
+        isOpen,
+        onClose,
+        "/study"
+    );
 
     return isOpen ? (
         <div className="modal-overlay">
@@ -44,7 +25,7 @@ const ModalBack: React.FC<ModalBackProps> = ({ isOpen, onClose }) => {
                             </div>
                             <div
                                 className="close-btn"
-                                onClick={handleNavigateToStudy}
+                                onClick={() => handleNavigate(navigate)}
                             >
                                 나가기
                             </div>

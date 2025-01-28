@@ -6,7 +6,7 @@ import ModalBack from "../Modal/modalBack";
 
 const Header: React.FC = () => {
     const location = useLocation();
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 관리
 
     // 모달 닫기 핸들러
     const handleCloseModal = () => {
@@ -19,7 +19,7 @@ const Header: React.FC = () => {
             return (
                 <button
                     className="nav-button"
-                    onClick={() => setIsModalOpen(true)}
+                    onClick={() => setIsModalOpen(true)} // 모달 열기
                 >
                     나가기
                 </button>
@@ -50,7 +50,6 @@ const Header: React.FC = () => {
                 </div>
                 <nav className="nav">{renderNavContent()}</nav>
             </header>
-            {/* 모달 */}
             <ModalBack isOpen={isModalOpen} onClose={handleCloseModal} />
         </>
     );
