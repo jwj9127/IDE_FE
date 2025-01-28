@@ -20,16 +20,23 @@ const Question: React.FC = () => {
 
                 const date = new Date().toISOString().split("T")[0];
 
-                const response = await axios.get(`API 주소`, {
-                    headers: {
-                        Authorization: "token",
-                    },
-                });
+                const response = await axios.get(
+                    `http://${process.env.REACT_APP_BASE_URL}/api/problem?date=${date}`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${process.env.REACT_APP_API_KEY}`,
+                            "Content-Type": "application/json",
+                        },
+                    }
+                );
 
                 if (response.data.code === 201) {
                     setProblem(response.data.data);
                 } else {
-                    setError("문제를 불러오는 데 실패했습니다.");
+                    setError(
+                        response.data.message ||
+                            "문제를 불러오는 데 실패했습니다."
+                    );
                 }
             } catch (err) {
                 setError("문제를 불러오는 중 오류가 발생했습니다.");
