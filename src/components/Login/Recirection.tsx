@@ -1,5 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { KakaoUserInfoRequestDto } from "./KakaoUserInfoRequestDto";
+
 
 const Recirection: React.FC = () => {
   const code = new URL(document.location.toString()).searchParams.get("code");

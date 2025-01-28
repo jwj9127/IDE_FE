@@ -13,6 +13,6 @@
       "isolatedModules": true,
       "noEmit": true,
       "jsx": "react-jsx",
-      "typeRoots": ["./node_modules/@types", "./src/typings"]
+      "typeRoots": ["./node_modules/@types", "codable/src/typings"]
     }
   }
