@@ -49,7 +49,7 @@ const Recirection: React.FC = () => {
     if (id !== null && name !== null && email !== null) {
       axios({
         method: "post",
-        url: "https://codeable.duckdns.org/api/login/kakao",
+        url: `${process.env.REACT_APP_BASE_URL}/api/login/kakao`,
         data: kakaoUserInfo,
       }).then((result) => {
         if (result.data.code === 201) {
