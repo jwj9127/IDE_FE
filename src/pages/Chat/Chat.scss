@@ -1,0 +1,120 @@
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 90vh;
+  background-color: #282B2F; // 전체 배경 색상
+  padding: 1rem;
+
+  .chat-ground{
+    width: 1600px;
+    height: 687px;
+    background-color: #AFAFAF; // 채팅 박스 배경색
+    border-radius: 24px;
+    margin-top: 42px;
+    padding: 24px;
+    overflow-y: auto;
+    -ms-overflow-style: none;  /*IE, Edge*/
+    ::-webkit-scrollbar {
+      display: none; /*Chrome, Safari, Opera*/
+    } 
+    }
+
+  .chat-box {
+    flex: center;
+    width: 1552px;
+    height: 540px;
+    background-color: #E3E3E3; // 채팅 박스 배경색
+    border-radius: 12px;
+    padding: 24px;
+    overflow-y: auto;
+    
+
+    .chat-message {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 12px;
+
+      &.my-message {
+        align-items: flex-end;
+
+        .nickname {
+          font-size: 16;
+          color: #000000;
+          margin-bottom: -12px;
+        }
+
+        p {
+          background-color: #ffffff;
+          color: #000000;
+          padding: 0.8rem 1rem;
+          border-radius: 16px 0px 16px 16px; //(top-left, top-right, bottom-right, bottom-left)
+          font-size: 1rem;
+          max-width: 40%;
+          max-height: 200%;
+          overflow-wrap: break-word;
+        }
+      }
+
+      &.other-message {
+        align-items: flex-start;
+
+        .nickname {
+          font-size: 16;
+          color: #000000;
+          margin-bottom: -12px;
+        }
+
+        p {
+          background-color: #BBBBBB;
+          color: #000000;
+          padding: 0.8rem 1rem;
+          border-radius: 0px 16px 16px 16px;
+          font-size: 1rem;
+          max-width: 50%;
+          max-height: 200%;
+          overflow-wrap: break-word;
+        }
+      }
+    }
+  }
+
+  .chat-footer {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 24px;
+    
+    input {
+      flex: 1;
+      padding: 24px;
+      border: none;
+      border-radius: 12px;
+      font-size: 1rem;
+      background-color: #F5F5F5;
+      
+    }
+
+    button {
+      padding: 24px;
+      background-color: #F5F5F5;
+      color: #000000;
+      border: none;
+      border-radius: 12px;
+      font-size: 1rem;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #8B8B8B;
+      }
+    }
+  }
+}
+.deleteIcon {
+  .delete-image {
+    height: 64px;
+    width: 64px;
+    margin: -24px;
+}
+}
