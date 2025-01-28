@@ -49,7 +49,7 @@ const Recirection: React.FC = () => {
     if (id !== null && name !== null && email !== null) {
       axios({
         method: "post",
-        url: `http://${process.env.REACT_APP_BASE_URL}/api/login/kakao`,
+        url: `https://${process.env.REACT_APP_BASE_URL}/api/login/kakao`,
         data: kakaoUserInfo,
         withCredentials: true,
       }).then((result) => {
