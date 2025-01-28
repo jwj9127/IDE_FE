@@ -51,6 +51,7 @@ const Recirection: React.FC = () => {
         method: "post",
         url: `${process.env.REACT_APP_BASE_URL}/api/login/kakao`,
         data: kakaoUserInfo,
+        withCredentials: true,
       }).then((result) => {
         if (result.data.code === 201) {
           localStorage.setItem("token", result.data.data.jwtToken);
