@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-export interface TimerProps {
+interface TimerProps {
     initialTime: number; // 초기 시간 (초 단위)
     onFiveMinutesLeft?: () => void; // 5분 남았을 때 호출되는 콜백
     onTimeEnd?: () => void; // 시간이 종료되었을 때 호출되는 콜백
@@ -21,13 +21,15 @@ export const useTimer = ({
                 setTime((prevTime) => {
                     const newTime = prevTime - 1;
 
+                    // 5분 남았을 때 콜백 호출
                     if (newTime === 5 * 60 && onFiveMinutesLeft) {
-                        onFiveMinutesLeft(); // 5분 남았을 때 실행
+                        onFiveMinutesLeft();
                     }
 
+                    // 시간이 종료되었을 때 호출
                     if (newTime === 0 && onTimeEnd) {
-                        onTimeEnd(); // 시간이 종료되었을 때 실행
-                        clearInterval(timer!); // 타이머 종료
+                        onTimeEnd();
+                        clearInterval(timer!);
                     }
 
                     return newTime;
@@ -40,7 +42,5 @@ export const useTimer = ({
         };
     }, [time, onFiveMinutesLeft, onTimeEnd]);
 
-    return {
-        time,
-    };
+    return { time };
 };

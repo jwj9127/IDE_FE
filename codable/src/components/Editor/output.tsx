@@ -1,13 +1,19 @@
 import React from "react";
 import "./output.scss";
 
-const output: React.FC = () => {
+interface OutputProps {
+    onRun: () => void;
+}
+
+const Output: React.FC<OutputProps> = ({ onRun }) => {
     return (
         <div className="output">
             <div className="content">결과</div>
-            <div className="btn">실행하기</div>
+            <button className="btn" onClick={onRun}>
+                실행하기
+            </button>
         </div>
     );
 };
 
-export default output;
+export default Output;

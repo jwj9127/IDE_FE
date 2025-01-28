@@ -1,26 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./codeEditor.scss";
 import { useTimer } from "../../hooks/useTimer";
-import ModalTimer from "../../components/Modal/modalTimer";
+import ModalTimer from "../Modal/modalTimer";
 import Editor, { OnMount } from "@monaco-editor/react";
 
-const CodeEditor: React.FC = () => {
-    const handleEditorDidMount: OnMount = (editor, monaco) => {
-        monaco.editor.defineTheme("custom-dark", {
-            base: "vs-dark",
-            inherit: true,
-            rules: [],
-            colors: {
-                "editor.background": "#1E1E1E",
-                "editor.lineHighlightBackground": "#2E2E2E",
-            },
-        });
+interface CodeEditorProps {
+    onMount: (editor: any, time: string) => void; // Monaco Editor와 남은 시간을 전달
+}
 
-        monaco.editor.setTheme("custom-dark");
-    };
-
+const CodeEditor: React.FC<CodeEditorProps> = ({ onMount }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isEditorDisabled, setIsEditorDisabled] = useState(false);
+    const editorRef = useRef<any>(null); // Monaco Editor 참조
 
     const { time } = useTimer({
         initialTime: 20 * 60, // 20분
@@ -34,13 +25,32 @@ const CodeEditor: React.FC = () => {
     });
 
     const formatTime = (seconds: number) => {
-        const hours = Math.floor(seconds / 3600);
-        const minutes = Math.floor((seconds % 3600) / 60);
+        const minutes = Math.floor(seconds / 60);
         const secs = seconds % 60;
-        return `${hours.toString().padStart(2, "0")}:${minutes
+        return `${minutes.toString().padStart(2, "0")}:${secs
             .toString()
-            .padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
+            .padStart(2, "0")}`;
     };
+
+    const handleEditorDidMount: OnMount = (editor, monaco) => {
+        editorRef.current = editor; // Monaco Editor 인스턴스 저장
+        monaco.editor.defineTheme("custom-dark", {
+            base: "vs-dark",
+            inherit: true,
+            rules: [],
+            colors: {
+                "editor.background": "#1E1E1E",
+                "editor.lineHighlightBackground": "#2E2E2E",
+            },
+        });
+        monaco.editor.setTheme("custom-dark");
+    };
+
+    useEffect(() => {
+        if (editorRef.current) {
+            onMount(editorRef.current, formatTime(time)); // 시간이 업데이트될 때마다 상위 컴포넌트로 전달
+        }
+    }, [time, onMount]);
 
     return (
         <>
@@ -49,7 +59,7 @@ const CodeEditor: React.FC = () => {
                 <div className="editor">
                     <Editor
                         height="100%"
-                        defaultLanguage="javascript"
+                        defaultLanguage="python"
                         defaultValue="// 여기에 코드를 입력하세요"
                         options={{
                             fontSize: 14,
