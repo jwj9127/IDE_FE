@@ -11,7 +11,17 @@ const Recirection: React.FC = () => {
 
   axios({
     method: "post",
-    url: `https://kauth.kakao.com/oauth/token?grant_type=authorization_code&cliende=${code}`,
+    url: "https://kauth.kakao.com/oauth/token",
+    data: {
+      grant_type: "authorization_code",
+      client_id: "e219a9b5f8b7dd45ffd5e20765d715de",
+      redirect_uri: "https://codeable.duckdns.org/login/oauth2/code/kakao",
+      code: `${code}`,
+      client_secret: "vMIh6B4uKHJhQkGiCLQgBLfjJZ7jcJVw",
+    },
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
+    },
   }).then((result) => {
     setAccessToken(result.data.access_token);
   });
