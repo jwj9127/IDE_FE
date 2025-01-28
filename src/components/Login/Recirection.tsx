@@ -15,7 +15,7 @@ const Recirection: React.FC = () => {
     data: {
       grant_type: "authorization_code",
       client_id: "e219a9b5f8b7dd45ffd5e20765d715de",
-      redirect_uri: "https://codeable.duckdns.org/login/oauth2/code/kakao",
+      redirect_uri: `${process.env.REACT_APP_REDIRECT_URI}`,
       code: `${code}`,
       client_secret: "vMIh6B4uKHJhQkGiCLQgBLfjJZ7jcJVw",
     },
