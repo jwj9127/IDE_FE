@@ -26,34 +26,38 @@ const Recirection: React.FC = () => {
     setAccessToken(result.data.access_token);
   });
 
-  axios({
-    method: "get",
-    url: " https://kapi.kakao.com/v2/user/me",
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-      "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
-    },
-  }).then((result) => {
-    setId(result.data.id);
-    setName(result.data.properties.nickname);
-    setEmail(result.data.kakao_account.email);
-  });
+  if (accessToken !== null) {
+    axios({
+      method: "get",
+      url: " https://kapi.kakao.com/v2/user/me",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
+      },
+    }).then((result) => {
+      setId(result.data.id);
+      setName(result.data.properties.nickname);
+      setEmail(result.data.kakao_account.email);
+    });
 
-  const kakaoUserInfo: KakaoUserInfoRequestDto = {
-    id,
-    name,
-    email,
-  };
+    const kakaoUserInfo: KakaoUserInfoRequestDto = {
+      id,
+      name,
+      email,
+    };
 
-  axios({
-    method: "post",
-    url: "/api/login/kakao",
-    data: kakaoUserInfo,
-  }).then((result) => {
-    if (result.data.code === 201) {
-      localStorage.setItem("token", result.data.data.jwtToken);
+    if (id !== null && name !== null && email !== null) {
+      axios({
+        method: "post",
+        url: "/api/login/kakao",
+        data: kakaoUserInfo,
+      }).then((result) => {
+        if (result.data.code === 201) {
+          localStorage.setItem("token", result.data.data.jwtToken);
+        }
+      });
     }
-  });
+  }
 
   return <></>;
 };
