@@ -22,7 +22,7 @@ const Chat: React.FC = () => {
     const client = new Client({
       brokerURL: baseURL,
       connectHeaders: {
-        Authorization: `Bearer ${authHeader}`,
+        Authorization: authHeader,
       } as { Authorization: string },
 
       onConnect: () => {
