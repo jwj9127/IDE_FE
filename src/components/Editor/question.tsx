@@ -34,13 +34,10 @@ const Question: React.FC = () => {
 
                 console.log(date); // 예: "2025-01-25-03:11:25"
 
-                const baseUrl = process.env.REACT_APP_BASE_URL;
                 const token = process.env.REACT_APP_API_KEY;
 
-                console.log(baseUrl);
-
                 const response = await axios.get(
-                    `${baseUrl}/api/problem?date=${date}`,
+                    `https://${process.env.REACT_APP_BASE_URL}/api/problem?date=${date}`,
                     {
                         headers: {
                             Authorization: `Bearer ${token}`,
