@@ -19,10 +19,6 @@ const Chat: React.FC = () => {
   useEffect(() => {
     const client = new Client({
       webSocketFactory: () => new SockJS(baseURL),
-      connectHeaders: {
-        login: "user",
-        passcode: "password",
-      },
       debug: function (str) {
         console.log(str);
       },
@@ -33,6 +29,10 @@ const Chat: React.FC = () => {
     const today = new Date().toISOString().slice(0, 10);
 
     client.onConnect = function (frame) {
+      const authHeader = window.localStorage.getItem("authorization") || "";
+      client.connectHeaders = {
+        Authorization: authHeader,
+      };
       // 채팅 구독
       client.subscribe("/subscribe/chat/room/testStudy", (message) => {
         if (message.body) {

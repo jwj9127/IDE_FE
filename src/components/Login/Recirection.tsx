@@ -61,6 +61,7 @@ const Recirection: React.FC = () => {
       }).then((result) => {
         if (result.data.code === 201) {
           localStorage.setItem("token", result.data.data.jwtToken);
+          window.location.href = "https://codablesite.netlify.app/study";
         }
       });
     }
