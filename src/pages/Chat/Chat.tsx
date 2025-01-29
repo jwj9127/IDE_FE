@@ -15,61 +15,49 @@ const Chat: React.FC = () => {
   );
   const [input, setInput] = useState(""); // 입력 필드 상태
   const userNickname = "코딩왕비빔밥님"; // 현재 사용자의 닉네임 (Kakao API로 가져와야 함)
+  const authHeader = window.localStorage.getItem("token") || "";
+  const today = new Date().toISOString().slice(0, 10);
 
   useEffect(() => {
-    console.log("hook 시작");
     const client = new Client({
-      webSocketFactory: () => new SockJS(baseURL),
-      debug: function (str) {
-        console.log(str);
+      brokerURL: baseURL,
+      connectHeaders: {
+        Authorization: `Bearer ${authHeader}`,
+      } as { Authorization: string },
+
+      onConnect: () => {
+        console.log("WebSocket open");
+        // 채팅 구독
+        client.subscribe("/subscribe/chat/room/testStudy", (message) => {
+          if (message.body) {
+            const receivedMessage = JSON.parse(message.body);
+            setMessages((prev) => [...prev, receivedMessage]);
+          }
+        });
+
+        // 메시지 히스토리 구독
+        client.subscribe(`/chat/history/testStudy/${today}`, (message) => {
+          if (message.body) {
+            const history = JSON.parse(message.body);
+            setMessages(history);
+          }
+        });
+        setStompClient(client);
       },
-      reconnectDelay: 5000,
-      heartbeatIncoming: 4000,
-      heartbeatOutgoing: 4000,
+
+      onDisconnect: () => {
+        console.log("WebSocket disconnected");
+      },
+
+      onStompError: (error) => {
+        console.error("WebSocket 연결 실패:", error);
+      },
     });
 
     client.activate();
 
-    console.log("client 확인 => " + client);
-
-    const today = new Date().toISOString().slice(0, 10);
-
-    client.onConnect = function () {
-      console.log("WebSocket 연결 성공");
-      const authHeader = window.localStorage.getItem("token") || "";
-      client.connectHeaders = {
-        Authorization: authHeader,
-      };
-      console.log("WebSocket open");
-      // 채팅 구독
-      client.subscribe("/subscribe/chat/room/testStudy", (message) => {
-        if (message.body) {
-          const receivedMessage = JSON.parse(message.body);
-          setMessages((prev) => [...prev, receivedMessage]);
-        }
-      });
-
-      // 메시지 히스토리 구독
-      client.subscribe(`/chat/history/testStudy/${today}`, (message) => {
-        if (message.body) {
-          const history = JSON.parse(message.body);
-          setMessages(history);
-        }
-      });
-
-      setStompClient(client);
-    };
-
-    client.onStompError = function (error) {
-      console.error("WebSocket 연결 실패:", error);
-    };
-
     return () => {
-      if (client) {
-        client.onDisconnect = function () {
-          console.log("WebSocket disconnected");
-        };
-      }
+      client.deactivate();
     };
   }, [stompClient]);
 
