@@ -17,6 +17,7 @@ const Chat: React.FC = () => {
   const userNickname = "코딩왕비빔밥님"; // 현재 사용자의 닉네임 (Kakao API로 가져와야 함)
 
   useEffect(() => {
+    console.log("hook 시작");
     const client = new Client({
       webSocketFactory: () => new SockJS(baseURL),
       debug: function (str) {
@@ -26,6 +27,9 @@ const Chat: React.FC = () => {
       heartbeatIncoming: 4000,
       heartbeatOutgoing: 4000,
     });
+
+    console.log("client 확인 => " + client);
+
     const today = new Date().toISOString().slice(0, 10);
 
     client.onConnect = function () {
@@ -64,7 +68,7 @@ const Chat: React.FC = () => {
         };
       }
     };
-  }, []);
+  }, [stompClient]);
 
   // 메시지 전송 함수
   const sendMessage = () => {
