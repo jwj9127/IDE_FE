@@ -9,6 +9,12 @@ const Recirection: React.FC = () => {
   const [name, setName] = useState<any>(null);
   const [email, setEmail] = useState<any>(null);
 
+  const kakaoUserInfo: KakaoUserInfoRequestDto = {
+    id,
+    name,
+    email,
+  };
+
   useEffect(() => {
     axios({
       method: "post",
@@ -26,7 +32,9 @@ const Recirection: React.FC = () => {
     }).then((result) => {
       setAccessToken(result.data.access_token);
     });
-  
+  }, [code]);
+
+  useEffect(() => {
     if (accessToken !== null) {
       axios({
         method: "get",
@@ -40,27 +48,23 @@ const Recirection: React.FC = () => {
         setName(result.data.properties.nickname);
         setEmail(result.data.kakao_account.email);
       });
-  
-      const kakaoUserInfo: KakaoUserInfoRequestDto = {
-        id,
-        name,
-        email,
-      };
-      
-      if (id !== null && name !== null && email !== null) {
-        axios({
-          method: "post",
-          url: `https://${process.env.REACT_APP_BASE_URL}/api/login/kakao`,
-          data: kakaoUserInfo,
-          withCredentials: true,
-        }).then((result) => {
-          if (result.data.code === 201) {
-            localStorage.setItem("token", result.data.data.jwtToken);
-          }
-        });
-      }
     }
-  },[code])
+  }, [accessToken]);
+
+  useEffect(() => {
+    if (id !== null && name !== null && email !== null) {
+      axios({
+        method: "post",
+        url: `https://${process.env.REACT_APP_BASE_URL}/api/login/kakao`,
+        data: kakaoUserInfo,
+        withCredentials: true,
+      }).then((result) => {
+        if (result.data.code === 201) {
+          localStorage.setItem("token", result.data.data.jwtToken);
+        }
+      });
+    }
+  }, [id, name, email]);
 
   return <></>;
 };
