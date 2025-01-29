@@ -29,10 +29,11 @@ const Chat: React.FC = () => {
     const today = new Date().toISOString().slice(0, 10);
 
     client.onConnect = function () {
-      const authHeader = window.localStorage.getItem("authorization") || "";
+      const authHeader = window.localStorage.getItem("token") || "";
       client.connectHeaders = {
         Authorization: authHeader,
       };
+      console.log("WebSocket open");
       // 채팅 구독
       client.subscribe("/subscribe/chat/room/testStudy", (message) => {
         if (message.body) {
