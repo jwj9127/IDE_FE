@@ -7,7 +7,7 @@ import "./Chat.scss";
 
 const Chat: React.FC = () => {
   const [stompClient, setStompClient] = useState<any>(null);
-  const baseURL = `http://${process.env.REACT_APP_BASE_URL}/ws`;
+  const baseURL = `ws://${process.env.REACT_APP_BASE_URL}/ws/chat`;
 
   // 채팅 메시지 상태 (닉네임과 텍스트를 저장)
   const [messages, setMessages] = useState<{ user: string; text: string }[]>(
@@ -28,7 +28,7 @@ const Chat: React.FC = () => {
     });
     const today = new Date().toISOString().slice(0, 10);
 
-    client.onConnect = function (frame) {
+    client.onConnect = function () {
       const authHeader = window.localStorage.getItem("authorization") || "";
       client.connectHeaders = {
         Authorization: authHeader,
@@ -54,7 +54,7 @@ const Chat: React.FC = () => {
 
     return () => {
       if (client) {
-        client.onDisconnect = function (frame) {
+        client.onDisconnect = function () {
           console.log("WebSocket disconnected");
         };
       }
@@ -127,4 +127,3 @@ const Chat: React.FC = () => {
 };
 
 export default Chat;
-
