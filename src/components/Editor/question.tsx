@@ -18,14 +18,32 @@ const Question: React.FC = () => {
                 setLoading(true);
                 setError(null);
 
-                const date = new Date().toISOString().split("T")[0];
+                const todayDate = new Date();
+                const date =
+                    todayDate.getFullYear().toString() + // 연도 (4자리)
+                    "-" +
+                    (todayDate.getMonth() + 1).toString().padStart(2, "0") + // 월 (2자리)
+                    "-" +
+                    todayDate.getDate().toString().padStart(2, "0") + // 일 (2자리)
+                    "-" +
+                    todayDate.getHours().toString().padStart(2, "0") + // 시 (2자리)
+                    ":" +
+                    todayDate.getMinutes().toString().padStart(2, "0") + // 분 (2자리)
+                    ":" +
+                    todayDate.getSeconds().toString().padStart(2, "0"); // 초 (2자리)
+
+                console.log(date); // 예: "2025-01-25-03:11:25"
+
+                const baseUrl = process.env.REACT_APP_BASE_URL;
+                const token = process.env.REACT_APP_API_KEY;
+
+                console.log(baseUrl);
 
                 const response = await axios.get(
-                    `http://${process.env.REACT_APP_BASE_URL}/api/problem?date=${date}`,
+                    `${baseUrl}/api/problem?date=${date}`,
                     {
                         headers: {
-                            Authorization: `Bearer ${process.env.REACT_APP_API_KEY}`,
-                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${token}`,
                         },
                     }
                 );
