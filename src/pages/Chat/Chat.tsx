@@ -28,11 +28,14 @@ const Chat: React.FC = () => {
       heartbeatOutgoing: 4000,
     });
 
+    client.activate();
+
     console.log("client 확인 => " + client);
 
     const today = new Date().toISOString().slice(0, 10);
 
     client.onConnect = function () {
+      console.log("WebSocket 연결 성공");
       const authHeader = window.localStorage.getItem("token") || "";
       client.connectHeaders = {
         Authorization: authHeader,
