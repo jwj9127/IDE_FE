@@ -7,7 +7,7 @@ import "./Chat.scss";
 
 const Chat: React.FC = () => {
   const [stompClient, setStompClient] = useState<any>(null);
-  const baseURL = `ws://${process.env.REACT_APP_BASE_URL}/ws/chat`;
+  const baseURL = `wss://${process.env.REACT_APP_BASE_URL}/ws/chat`;
 
   // 채팅 메시지 상태 (닉네임과 텍스트를 저장)
   const [messages, setMessages] = useState<{ user: string; text: string }[]>(
