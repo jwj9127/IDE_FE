@@ -1,4 +1,5 @@
 import axios from "axios";
+import axiosInstance from "../utils/axiosInstance";
 
 interface RunData {
     code: string;
@@ -9,18 +10,10 @@ interface RunData {
 export const useRun = () => {
     const runCode = async (data: RunData): Promise<void> => {
         try {
-            const baseUrl = process.env.REACT_APP_BASE_URL;
-
-            if (!baseUrl) {
-                throw new Error(
-                    "환경 변수 REACT_APP_BASE_URL이 설정되지 않았습니다."
-                );
-            }
-
-            const API_URL = `https://${baseUrl}/api/problem?id=${data.problemId}`;
+            const API_URL = `/api/problem?id=${data.problemId}`;
             console.log("API 요청 URL:", API_URL);
 
-            const response = await axios.post(API_URL, {
+            const response = await axiosInstance.post(API_URL, {
                 code: data.code,
                 remainingTime: data.remainingTime,
             });
