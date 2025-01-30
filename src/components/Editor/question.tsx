@@ -30,7 +30,7 @@ const Question: React.FC<QuestionProps> = ({ onProblemLoad }) => {
     return (
         <div className="question">
             <h2>문제 {problem.problemId}</h2>
-            <div className="question-content">{problem.content}</div>
+            <div className="question-problem">{problem.content}</div>
         </div>
     );
 };
