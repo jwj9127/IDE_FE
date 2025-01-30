@@ -23,14 +23,6 @@
         justify-content: center;
         padding: 0;
         margin: 0;
-
-        p {
-            text-align: center;
-            height: 100%;
-            line-height: 25px;
-            margin: 0;
-            padding: 0;
-        }
     }
 
     table {
@@ -75,6 +67,9 @@
             background-color: $calendarBackgroundColor;
             color: #000000;
             border: 1px solid #000000;
+            text-align: center;
+            cursor: pointer;
+
 
             p {
                 position: absolute;
@@ -82,7 +77,42 @@
                 right: 5px;
                 text-align: right;
                 margin: 0;
+                font-size: 14px;
             }
         }
     }
+} 
+
+.studyIcon {
+    width: 20px;
+    height: 20px;
+    margin-top: 10px;
+}
+
+.popup {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 1000;  
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    gap: 5px;
+}
+
+button {
+    background-color: #f58585;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    white-space: nowrap; 
+    display: inline-block;
 }

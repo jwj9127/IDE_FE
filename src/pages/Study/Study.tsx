@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import axiosInstance from "../../utils/axiosInstance"; 
 import MemberSection from "./MemberSection";
 import RulesSection from "./RulesSection";
 import CalendarSection from "./CalendarSection";
@@ -18,7 +18,7 @@ const Study = () => {
     useEffect(() => {
         const fetchMembers = async () => {
             try {
-                const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/api/study`);
+                const response = await axiosInstance.get("/api/study"); 
                 if (response.data.code === 201) {
                     const formattedMembers: Member[] = response.data.data.memberList.map(
                         (member: { username: string; profileImage: string }) => ({
