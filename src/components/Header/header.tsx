@@ -13,7 +13,7 @@ const Header: React.FC = () => {
         const token = localStorage.getItem("jwt");
         if (token) {
             navigate("/study");
-        } else {
+        } else if (!token) {
             navigate("/");
         }
     };
