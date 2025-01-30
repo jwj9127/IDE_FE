@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import MemberSection from "./MemberSection";
 import RulesSection from "./RulesSection";
 import CalendarSection from "./CalendarSection";
 
+import basicImage from "../../assets/female.png";
 import styles from "./Study.module.scss";
 
 type Member = {
@@ -10,24 +12,30 @@ type Member = {
     name: string;
 };
 
-const fetchKakaoMembers = async (): Promise<Member[]> => {
-    return [
-        { image: "https://via.placeholder.com/50", name: "홍길동" },
-        { image: "https://via.placeholder.com/50", name: "김철수" },
-        { image: "https://via.placeholder.com/50", name: "이영희" },
-    ];
-};
-
 const Study = () => {
     const [members, setMembers] = useState<Member[]>([]);
 
     useEffect(() => {
-        const loadMembers = async () => {
-            const data = await fetchKakaoMembers();
-            setMembers(data);
+        const fetchMembers = async () => {
+            try {
+                const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/api/study`);
+                if (response.data.code === 201) {
+                    const formattedMembers: Member[] = response.data.data.memberList.map(
+                        (member: { username: string; profileImage: string }) => ({
+                            image: member.profileImage || basicImage,
+                            name: member.username,
+                        })
+                    );
+                    setMembers(formattedMembers);
+                } else {
+                    console.error("스터디 정보를 불러오는데 실패했습니다.");
+                }
+            } catch (error) {
+                console.error("API 요청 중 오류 발생:", error);
+            }
         };
 
-        loadMembers();
+        fetchMembers();
     }, []);
 
     const now = new Date();
@@ -56,7 +64,6 @@ const Study = () => {
                 </div>
             </div>
         </div>
-
     );
 };
 
