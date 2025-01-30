@@ -21,6 +21,10 @@ const Study = () => {
         const fetchMembers = async () => {
             try {
                 const response = await axiosInstance.get("/api/study"); 
+                console.log("🟡 요청 URL:", axiosInstance.defaults.baseURL + "/api/study");
+                console.log("🟢 [API 응답 성공]");
+                console.log("응답 전체:", response);
+                console.log("응답 데이터:", response.data);
                 if (response.data.code === 201) {
                     const formattedMembers: Member[] = response.data.data.memberList.map(
                         (member: { username: string; profileImage: string }) => ({
