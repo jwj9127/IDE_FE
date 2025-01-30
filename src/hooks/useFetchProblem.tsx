@@ -27,16 +27,27 @@ export const useFetchProblem = () => {
                     "-" +
                     todayDate.getDate().toString().padStart(2, "0");
 
-                console.log("📡 API 요청 URL:", `/api/problem?date=${date}`);
+                const apiUrl = `/api/problem?date=${date}`;
+
+                console.log("📡 요청 전: API 호출 준비 중...");
                 console.log(
                     "🌍 axiosInstance baseURL:",
                     axiosInstance.defaults.baseURL
                 );
+                console.log("📡 API 요청 URL:", apiUrl);
+
+                // ✅ 실제 요청이 서버로 전송되었는지 확인하기 위해 타임스탬프 추가
+                console.time("⏳ API 요청 시간");
 
                 // API 호출
-                const response = await axiosInstance.get(
-                    `/api/problem?date=${date}`
-                );
+                const response = await axiosInstance.get(apiUrl);
+
+                console.timeEnd("⏳ API 요청 시간"); // ✅ 요청 완료 시간 출력
+                console.log("📤 요청 보냄:", {
+                    method: "GET",
+                    url: `${axiosInstance.defaults.baseURL}${apiUrl}`,
+                    headers: axiosInstance.defaults.headers,
+                });
 
                 console.log("✅ 서버 응답:", response.data);
 
