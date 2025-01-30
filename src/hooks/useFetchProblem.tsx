@@ -28,10 +28,10 @@ export const useFetchProblem = () => {
                     todayDate.getDate().toString().padStart(2, "0");
 
                 const apiUrl = `/api/problem?date=${date}`;
-
                 const response = await axiosInstance.get(apiUrl);
 
-                console.log(response.data.code);
+                console.log(response);
+                console.log(response.data.data);
 
                 if (response.data.code === 200 && response.data.data) {
                     setProblem({
