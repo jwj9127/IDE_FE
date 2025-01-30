@@ -1,17 +1,25 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useRun } from "./useRun";
 
 interface TimerProps {
-    initialTime: number; // 초기 시간 (초 단위)
-    onFiveMinutesLeft?: () => void; // 5분 남았을 때 호출되는 콜백
-    onTimeEnd?: () => void; // 시간이 종료되었을 때 호출되는 콜백
+    initialTime: number;
+    onFiveMinutesLeft?: () => void;
+    getCode: () => string; // Monaco Editor에서 코드 가져오는 함수
+    problemId: number;
+    onTimeEnd?: () => void;
 }
 
 export const useTimer = ({
     initialTime,
     onFiveMinutesLeft,
+    getCode,
+    problemId,
     onTimeEnd,
 }: TimerProps) => {
     const [time, setTime] = useState(initialTime);
+    const { runCode } = useRun();
+    const navigate = useNavigate();
 
     useEffect(() => {
         let timer: NodeJS.Timeout | null = null;
@@ -21,15 +29,13 @@ export const useTimer = ({
                 setTime((prevTime) => {
                     const newTime = prevTime - 1;
 
-                    // 5분 남았을 때 콜백 호출
                     if (newTime === 5 * 60 && onFiveMinutesLeft) {
                         onFiveMinutesLeft();
                     }
 
-                    // 시간이 종료되었을 때 호출
-                    if (newTime === 0 && onTimeEnd) {
-                        onTimeEnd();
+                    if (newTime === 0) {
                         clearInterval(timer!);
+                        handleTimeEnd(); // ✅ 시간이 종료되면 실행 후 이동
                     }
 
                     return newTime;
@@ -40,7 +46,25 @@ export const useTimer = ({
         return () => {
             if (timer) clearInterval(timer);
         };
-    }, [time, onFiveMinutesLeft, onTimeEnd]);
+    }, [time]);
+
+    // ✅ 시간이 종료되었을 때 실행
+    const handleTimeEnd = async () => {
+        onTimeEnd?.(); // ✅ Monaco Editor 수정 불가능 설정
+        const code = getCode().trim();
+
+        if (!code) {
+            console.warn("🚨 실행할 코드가 없습니다.");
+            navigate("/chat"); // ✅ 코드가 없을 경우 바로 이동
+            return;
+        }
+
+        console.log("🚀 시간이 종료되어 자동 실행:", { problemId, code });
+
+        await runCode({ code, remainingTime: "00:00", problemId });
+
+        navigate("/chat"); // ✅ 실행 후 페이지 이동
+    };
 
     return { time };
 };

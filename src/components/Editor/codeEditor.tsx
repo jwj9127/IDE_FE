@@ -5,22 +5,26 @@ import ModalTimer from "../Modal/modalTimer";
 import Editor, { OnMount } from "@monaco-editor/react";
 
 interface CodeEditorProps {
-    onMount: (editor: any, time: string) => void; // Monaco Editor와 남은 시간을 전달
+    onMount: (editor: any, time: string) => void;
 }
 
 const CodeEditor: React.FC<CodeEditorProps> = ({ onMount }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isEditorDisabled, setIsEditorDisabled] = useState(false);
-    const editorRef = useRef<any>(null); // Monaco Editor 참조
+    const editorRef = useRef<any>(null);
+
+    const getCode = () => editorRef.current?.getValue() || "";
 
     const { time } = useTimer({
-        initialTime: 20 * 60, // 20분
+        initialTime: 20 * 60,
         onFiveMinutesLeft: () => {
             setIsModalOpen(true);
             setTimeout(() => setIsModalOpen(false), 3000);
         },
+        getCode,
+        problemId: 1, // ✅ 문제 ID를 실제 문제에 맞게 동적으로 전달 가능
         onTimeEnd: () => {
-            setIsEditorDisabled(true); // 에디터 비활성화
+            setIsEditorDisabled(true); // ✅ 시간이 종료되면 수정 불가능
         },
     });
 
@@ -31,6 +35,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ onMount }) => {
             .toString()
             .padStart(2, "0")}`;
     };
+
     const handleEditorDidMount: OnMount = (editor, monaco) => {
         editorRef.current = editor;
         monaco.editor.defineTheme("custom-dark", {
@@ -49,7 +54,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ onMount }) => {
 
     useEffect(() => {
         if (editorRef.current) {
-            onMount(editorRef.current, formatTime(time)); // 상위 컴포넌트로 업데이트 전달
+            onMount(editorRef.current, formatTime(time));
         }
     }, [time, onMount]);
 
@@ -66,7 +71,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ onMount }) => {
                             fontSize: 14,
                             minimap: { enabled: false },
                             scrollBeyondLastLine: false,
-                            readOnly: isEditorDisabled,
+                            readOnly: isEditorDisabled, // ✅ 시간이 종료되면 읽기 전용
                         }}
                         onMount={handleEditorDidMount}
                     />

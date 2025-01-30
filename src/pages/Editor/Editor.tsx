@@ -6,23 +6,21 @@ import CodeEditor from "../../components/Editor/codeEditor";
 import { useRun } from "../../hooks/useRun";
 
 const Editor: React.FC = () => {
-    const editorRef = useRef<any>(null); // CodeEditor의 Monaco Editor 참조
-    const remainingTimeRef = useRef<string>(""); // 남은 시간 저장
+    const editorRef = useRef<any>(null);
+    const remainingTimeRef = useRef<string>("");
     const [problemId, setProblemId] = useState<number | null>(null);
-    const { runCode } = useRun(); // 코드 실행 훅
+    const { runCode } = useRun();
+    const [output, setOutput] = useState<string>("");
 
-    // CodeEditor에서 Monaco Editor와 남은 시간을 전달받는 함수
     const handleCodeEditorMount = (editor: any, time: string) => {
         editorRef.current = editor;
         remainingTimeRef.current = time;
     };
 
-    // Question 컴포넌트에서 problemId를 가져오는 함수
     const handleProblemLoad = (id: number) => {
         setProblemId(id);
     };
 
-    // 실행하기 버튼 클릭 시 호출되는 함수
     const handleRun = async () => {
         if (!editorRef.current) {
             alert("코드 편집기가 로드되지 않았습니다.");
@@ -42,8 +40,10 @@ const Editor: React.FC = () => {
             return;
         }
 
-        console.log("코드 실행 요청:", { code, remainingTime, problemId });
-        await runCode({ code, remainingTime, problemId });
+        console.log("📡 코드 실행 요청:", { code, remainingTime, problemId });
+
+        const result = await runCode({ code, remainingTime, problemId });
+        setOutput(result);
     };
 
     return (
@@ -51,10 +51,9 @@ const Editor: React.FC = () => {
             <div className="question-content">
                 <Question onProblemLoad={handleProblemLoad} />
             </div>
-
             <div className="editor-content">
                 <CodeEditor onMount={handleCodeEditorMount} />
-                <Output onRun={handleRun} />
+                <Output onRun={handleRun} output={output} />
             </div>
         </div>
     );
