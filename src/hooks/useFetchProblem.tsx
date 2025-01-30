@@ -50,6 +50,7 @@ export const useFetchProblem = () => {
                 console.log("✅ 서버 응답:", response.data);
 
                 if (response.data.code === 201 && response.data.data) {
+                    console.log("🟢 setProblem 실행됨!", response.data.data);
                     setProblem({
                         problemId: response.data.data.problemId,
                         content: response.data.data.content,
