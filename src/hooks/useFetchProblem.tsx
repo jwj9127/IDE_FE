@@ -36,13 +36,11 @@ export const useFetchProblem = () => {
                 );
                 console.log("📡 API 요청 URL:", apiUrl);
 
-                // ✅ 요청 시작 시간 기록
                 console.time("⏳ API 요청 시간");
 
-                // API 호출
                 const response = await axiosInstance.get(apiUrl);
 
-                console.timeEnd("⏳ API 요청 시간"); // ✅ 요청 완료 시간 출력
+                console.timeEnd("⏳ API 요청 시간");
                 console.log("📤 요청 보냄:", {
                     method: "GET",
                     url: `${axiosInstance.defaults.baseURL}${apiUrl}`,
@@ -51,10 +49,10 @@ export const useFetchProblem = () => {
 
                 console.log("✅ 서버 응답:", response.data);
 
-                if (response.data.code === 201) {
+                if (response.data.code === 201 && response.data.data) {
                     setProblem({
-                        problemId: response.data.problemId,
-                        content: response.data.content,
+                        problemId: response.data.data.problemId,
+                        content: response.data.data.content,
                     });
                 } else {
                     const errorMessage =

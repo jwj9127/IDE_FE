@@ -23,16 +23,14 @@ const Question: React.FC<QuestionProps> = ({ onProblemLoad }) => {
         return <div className="question error">{error}</div>;
     }
 
+    if (!problem) {
+        return <div className="question">문제를 찾을 수 없습니다.</div>;
+    }
+
     return (
         <div className="question">
-            {problem ? (
-                <>
-                    <h2>문제 {problem.problemId}</h2>
-                    <div>{problem.content}</div>
-                </>
-            ) : (
-                <div>문제를 찾을 수 없습니다.</div>
-            )}
+            <h2>문제 {problem.problemId}</h2>
+            <pre>{problem.content}</pre>
         </div>
     );
 };
