@@ -6,6 +6,8 @@ import CalendarSection from "./CalendarSection";
 
 import basicImage from "../../assets/female.png";
 import styles from "./Study.module.scss";
+import { useNavigate } from "react-router-dom";
+
 
 type Member = {
     image: string;
@@ -48,6 +50,11 @@ const Study = () => {
         .fill(null)
         .concat(Array.from({ length: lastDate }, (_, i) => i + 1));
 
+    const navigate = useNavigate();
+    const onClick = () => {
+        navigate("/editor");
+    }
+
     return (
         <div className={styles.container}>
             <div className={styles.frame}>
@@ -58,7 +65,7 @@ const Study = () => {
                     <CalendarSection month={month} calendar={calendar} />
                 </div>
                 <div className={styles.buttonDiv}>
-                    <button type="button" className={styles.problemButton}>
+                    <button type="button" className={styles.problemButton} onClick={() => onClick()}>
                         문제 풀기
                     </button>
                 </div>
