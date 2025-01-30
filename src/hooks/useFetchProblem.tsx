@@ -4,7 +4,7 @@ import axiosInstance from "../utils/axiosInstance";
 
 interface ProblemData {
     problemId: number;
-    problemContent: string;
+    content: string;
 }
 
 export const useFetchProblem = () => {

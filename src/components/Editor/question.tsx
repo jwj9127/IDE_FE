@@ -28,7 +28,7 @@ const Question: React.FC<QuestionProps> = ({ onProblemLoad }) => {
             {problem ? (
                 <>
                     <h2>문제 {problem.problemId}</h2>
-                    <div>{problem.problemContent}</div>
+                    <div>{problem.content}</div>
                 </>
             ) : (
                 <div>문제를 찾을 수 없습니다.</div>
