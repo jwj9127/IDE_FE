@@ -8,7 +8,7 @@ interface ProblemData {
 }
 
 export const useFetchProblem = () => {
-    const [problem, setProblem] = useState<ProblemData | null>(null);
+    const [problem, setProblem] = useState<ProblemData>();
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
 
@@ -29,32 +29,14 @@ export const useFetchProblem = () => {
 
                 const apiUrl = `/api/problem?date=${date}`;
 
-                console.log("📡 요청 전: API 호출 준비 중...");
-                console.log(
-                    "🌍 axiosInstance baseURL:",
-                    axiosInstance.defaults.baseURL
-                );
-                console.log("📡 API 요청 URL:", apiUrl);
-
-                console.time("⏳ API 요청 시간");
-
                 const response = await axiosInstance.get(apiUrl);
 
-                console.timeEnd("⏳ API 요청 시간");
-                console.log("📤 요청 보냄:", {
-                    method: "GET",
-                    url: `${axiosInstance.defaults.baseURL}${apiUrl}`,
-                    headers: axiosInstance.defaults.headers,
-                });
-
-                console.log("✅ 서버 응답:", response.data);
-
                 if (response.data.code === 201 && response.data.data) {
-                    console.log("🟢 setProblem 실행됨!", response.data.data);
                     setProblem({
                         problemId: response.data.data.problemId,
                         content: response.data.data.content,
                     });
+                    console.log(response.data.data);
                 } else {
                     const errorMessage =
                         response.data.message ||

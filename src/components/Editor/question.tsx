@@ -13,7 +13,6 @@ const Question: React.FC<QuestionProps> = ({ onProblemLoad }) => {
         if (problem) {
             onProblemLoad(problem.problemId);
         }
-        console.log("🟢 Question.tsx의 problem 상태:", problem);
     }, [problem, onProblemLoad]);
 
     if (loading) {
