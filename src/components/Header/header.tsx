@@ -1,12 +1,22 @@
 import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./header.scss";
 import logo from "../../assets/logo.png";
 import ModalBack from "../Modal/modalBack";
 
 const Header: React.FC = () => {
     const location = useLocation();
-    const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 관리
+    const navigate = useNavigate();
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const handleLogoClick = () => {
+        const token = localStorage.getItem("jwt");
+        if (token) {
+            navigate("/study");
+        } else {
+            navigate("/");
+        }
+    };
 
     // 모달 닫기 핸들러
     const handleCloseModal = () => {
@@ -19,7 +29,7 @@ const Header: React.FC = () => {
             return (
                 <button
                     className="nav-button"
-                    onClick={() => setIsModalOpen(true)} // 모달 열기
+                    onClick={() => setIsModalOpen(true)}
                 >
                     나가기
                 </button>
@@ -43,10 +53,9 @@ const Header: React.FC = () => {
     return (
         <>
             <header className="header">
-                <div className="logo">
-                    <Link to="/study">
-                        <img src={logo} alt="Codable" className="logo-image" />
-                    </Link>
+                <div className="logo" onClick={handleLogoClick}>
+                    {" "}
+                    <img src={logo} alt="Codable" className="logo-image" />
                 </div>
                 <nav className="nav">{renderNavContent()}</nav>
             </header>
