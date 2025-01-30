@@ -3,21 +3,23 @@
 .membersFrame {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 10px;
     height: 100%;
 }
 
 .memberDiv {
-    padding: 15px;
+    padding-left: 20px;
     border-radius: $borderRadius;
     display: flex;
     align-items: center;
     width: 250px;
+    background-color: white;
+    font-size: 14px;
 
 
     > img {
-        max-width: 30px;
-        max-height: 30px;
+        max-width: 35px;
+        max-height: 35px;
         margin-right: 20px;
     }
 }

@@ -78,7 +78,6 @@ const Study = () => {
             <div className={styles.frame}>
                 <p>팀원분들이 들어오면 코딩을 시작합니다!</p>
                 <div className={styles.innerFrame}>
-                    {/* 로그인한 멤버 정보를 MemberSection에 추가 */}
                     <MemberSection members={members} loginMember={loginMember} />
                     <RulesSection />
                     <CalendarSection month={month} calendar={calendar} todayDate={todayDate} />
