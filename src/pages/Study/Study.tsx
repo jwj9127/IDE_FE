@@ -31,6 +31,9 @@ const Study = () => {
                     setMembers(formattedMembers);
                 } else {
                     console.error("스터디 정보를 불러오는데 실패했습니다.");
+                    // 로그 출력용 코드
+                    console.log("response.data.code = ", response.data.code);
+                    console.log("process.env.REACT_APP_BASE_URL = ", process.env.REACT_APP_BASE_URL);
                 }
             } catch (error) {
                 console.error("API 요청 중 오류 발생:", error);
