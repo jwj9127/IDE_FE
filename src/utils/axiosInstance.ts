@@ -18,7 +18,7 @@ axiosInstance.interceptors.request.use(
     (config) => {
         const token = localStorage.getItem("token"); // local storage에서 token 가져오기
         if (token) {
-            config.headers.Authorization = `Bearer ${token}`;
+            config.headers.Authorization = token; // Bearer 삭제 (401 에러 해결용)
         } else {
             console.warn("토큰이 없습니다. 로그인 상태를 확인하세요.");
         }
