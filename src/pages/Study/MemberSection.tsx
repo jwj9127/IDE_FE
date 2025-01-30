@@ -6,15 +6,26 @@ type Member = {
     name: string;
 };
 
+type LoginMember = {
+    name: string;
+};
+
 interface MemberSectionProps {
     members: Member[];
+    loginMember: LoginMember | null;
 }
 
-const MemberSection = ({ members }: MemberSectionProps) => {
+const MemberSection = ({ members, loginMember }: MemberSectionProps) => {
     return (
         <div className={styles.membersFrame}>
             {members.map((member, idx) => (
-                <div className={styles.memberDiv} key={idx}>
+                <div
+                    key={idx}
+                    className={styles.memberDiv}
+                    style={{
+                        backgroundColor: loginMember?.name === member.name ? "#8b8b8b" : "#e3e3e3", 
+                    }}
+                >
                     <img src={defaultImage} alt="Member" />
                     <p>{member.name}님</p>
                 </div>
