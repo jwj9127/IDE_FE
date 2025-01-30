@@ -10,7 +10,7 @@ interface RunData {
 export const useRun = () => {
     const runCode = async (data: RunData): Promise<string> => {
         try {
-            const API_URL = `/api/problem?id=${data.problemId}`;
+            const API_URL = `/api/code/submit`;
             console.log("API 요청 URL:", API_URL);
 
             const response = await axiosInstance.post(API_URL, {
