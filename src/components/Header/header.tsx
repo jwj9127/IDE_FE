@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "./header.scss";
 import logo from "../../assets/logo.png";
 import ModalBack from "../Modal/modalBack";
@@ -10,12 +10,17 @@ const Header: React.FC = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleLogoClick = () => {
-        const token = localStorage.getItem("jwt");
+        const token = localStorage.getItem("token");
         if (token) {
             navigate("/study");
-        } else if (!token) {
+        } else {
             navigate("/");
         }
+    };
+
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        navigate("/");
     };
 
     // 모달 닫기 핸들러
@@ -39,10 +44,7 @@ const Header: React.FC = () => {
             location.pathname === "/study"
         ) {
             return (
-                <button
-                    className="nav-button"
-                    onClick={() => console.log("로그아웃")}
-                >
+                <button className="nav-button" onClick={handleLogout}>
                     로그아웃
                 </button>
             );
@@ -54,7 +56,6 @@ const Header: React.FC = () => {
         <>
             <header className="header">
                 <div className="logo" onClick={handleLogoClick}>
-                    {" "}
                     <img src={logo} alt="Codable" className="logo-image" />
                 </div>
                 <nav className="nav">{renderNavContent()}</nav>
