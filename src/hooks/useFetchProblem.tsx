@@ -53,8 +53,8 @@ export const useFetchProblem = () => {
 
                 if (response.data.code === 201) {
                     setProblem({
-                        problemId: response.data.data.problemId,
-                        content: response.data.data.content,
+                        problemId: response.data.problemId,
+                        content: response.data.content,
                     });
                 } else {
                     const errorMessage =
