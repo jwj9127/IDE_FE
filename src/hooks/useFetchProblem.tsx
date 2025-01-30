@@ -31,7 +31,7 @@ export const useFetchProblem = () => {
                 const response = await axiosInstance.get(apiUrl);
 
                 console.log(response);
-                console.log(response.data.data);
+                console.log("데이터: ", response.data.content);
 
                 if (response.data.code === 200 && response.data.data) {
                     setProblem({
