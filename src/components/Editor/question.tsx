@@ -3,11 +3,15 @@ import axios from "axios";
 import "./question.scss";
 
 interface ProblemData {
-    problemId: number; // 문제 ID
-    problemContent: string; // 문제 내용
+    problemId: number;
+    problemContent: string;
 }
 
-const Question: React.FC = () => {
+interface QuestionProps {
+    onProblemLoad: (id: number) => void;
+}
+
+const Question: React.FC<QuestionProps> = ({ onProblemLoad }) => {
     const [problem, setProblem] = useState<ProblemData | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
@@ -20,13 +24,11 @@ const Question: React.FC = () => {
 
                 const todayDate = new Date();
                 const date =
-                    todayDate.getFullYear().toString() + // 연도 (4자리)
+                    todayDate.getFullYear().toString() +
                     "-" +
-                    (todayDate.getMonth() + 1).toString().padStart(2, "0") + // 월 (2자리)
+                    (todayDate.getMonth() + 1).toString().padStart(2, "0") +
                     "-" +
-                    todayDate.getDate().toString().padStart(2, "0"); // 일 (2자리)
-
-                console.log(date); // 예: "2025-01-25-03:11:25"
+                    todayDate.getDate().toString().padStart(2, "0");
 
                 const response = await axios.get(
                     `${process.env.REACT_APP_BASE_URL}/api/problem?date=${date}`,
@@ -39,6 +41,7 @@ const Question: React.FC = () => {
 
                 if (response.data.code === 201) {
                     setProblem(response.data.data);
+                    onProblemLoad(response.data.data.problemId);
                 } else {
                     setError(
                         response.data.message ||
@@ -53,7 +56,7 @@ const Question: React.FC = () => {
         };
 
         fetchProblem();
-    }, []);
+    }, [onProblemLoad]);
 
     if (loading) {
         return <div className="question">문제를 불러오는 중입니다...</div>;
