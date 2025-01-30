@@ -3,10 +3,13 @@ import axiosInstance from "../../utils/axiosInstance";
 import studyYes from "../../assets/studyYes.png";
 import studyNo from "../../assets/studyNo.png";
 import styles from "./CalendarSection.module.scss";
+import questionX from "../../assets/questionX.png";
+import chattingX from "../../assets/chattingX.png";
 
 interface CalendarSectionProps {
     month: number;
     calendar: (number | null)[];
+    todayDate: number;
 }
 
 interface ChatMessage {
@@ -23,7 +26,7 @@ interface CodeData {
     solveTime: string;
 }
 
-const CalendarSection = ({ month, calendar }: CalendarSectionProps) => {
+const CalendarSection = ({ month, calendar, todayDate }: CalendarSectionProps) => {
     const [selectedDate, setSelectedDate] = useState<number | null>(null);
     const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]);
     const [codeData, setCodeData] = useState<CodeData | null>(null);
@@ -92,8 +95,8 @@ const CalendarSection = ({ month, calendar }: CalendarSectionProps) => {
                                     >
                                         {date && <p>{date}</p>}
 
-                                        {/* 기본적으로 studyNo 이미지 추가 */}
-                                        {date && (
+                                        {/* 여기서 studyNo 이미지가 있는 날짜는 눌러도 popupDiv가 나오지 않게 해줘. studyNo는 디폴트 이미지이고, api 연동 시 */}
+                                        {date && date < todayDate && ( 
                                             <img
                                                 src={studyImage[date] || studyNo}
                                                 alt="스터디 상태"
@@ -103,8 +106,15 @@ const CalendarSection = ({ month, calendar }: CalendarSectionProps) => {
 
                                         {selectedDate === date && date && (
                                             <div className={styles.popup}>
-                                                <button onClick={() => handleDateClick(date)}>문제풀이</button>
-                                                <button onClick={() => handleDateClick(date)}>채팅</button>
+                                                {/* 문제풀이 버튼 */}
+                                                <button className={styles.questionButton}>
+                                                    <img className="question-img" src={questionX} alt="문제풀이" />
+                                                </button>
+
+                                                {/* 채팅 버튼 */}
+                                                <button className={styles.chattingButton}>
+                                                    <img className="chatting-img" src={chattingX} alt="채팅" />
+                                                </button>
                                             </div>
                                         )}
                                     </td>

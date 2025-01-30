@@ -90,29 +90,67 @@
 }
 
 .popup {
+    display: flex;
+    gap: 10px;
+    z-index: 1000; 
     position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    background: white;
-    border: 1px solid #ccc;
     padding: 10px;
     border-radius: 8px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    z-index: 1000;  
+    
+    top: 100%;
+
+    background: white;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-    gap: 5px;
+}
+
+
+
+
+.popupText {
+    font-size: 14px;
+    color: $textColor;
+    margin-bottom: 5px;
+    text-align: center;
 }
 
 button {
-    background-color: #f58585;
-    color: white;
     border: none;
-    padding: 5px 10px;
+    background: none;
+    padding: 0;
     cursor: pointer;
-    border-radius: 5px;
-    white-space: nowrap; 
-    display: inline-block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+// 문제풀이 버튼
+.questionButton img {
+    width: 60px; 
+    height: auto;
+    display: block;
+    transition: opacity 0.2s;
+}
+
+.questionButton:hover img {
+    content: url("../../assets/questionO.png");
+}
+
+.questionButton:active img {
+    content: url("../../assets/questionX.png");
+}
+
+// 채팅 버튼
+.chattingButton img {
+    width: 60px;
+    height: auto;
+    display: block;
+    transition: opacity 0.2s;
+}
+
+.chattingButton:hover img {
+    content: url("../../assets/chattingO.png");
+}
+
+.chattingButton:active img {
+    content: url("../../assets/chattingX.png");
 }

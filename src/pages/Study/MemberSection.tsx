@@ -1,8 +1,8 @@
 import React from "react";
 import styles from "./MemberSection.module.scss";
+import defaultImage from "../../assets/male.png";
 
 type Member = {
-    image: string;
     name: string;
 };
 
@@ -15,7 +15,7 @@ const MemberSection = ({ members }: MemberSectionProps) => {
         <div className={styles.membersFrame}>
             {members.map((member, idx) => (
                 <div className={styles.memberDiv} key={idx}>
-                    <img src={member.image} alt="Member" />
+                    <img src={defaultImage} alt="Member" />
                     <p>{member.name}님</p>
                 </div>
             ))}

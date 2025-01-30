@@ -21,14 +21,14 @@ const Study = () => {
         const fetchMembers = async () => {
             try {
                 const response = await axiosInstance.get("/api/study"); 
-                console.log("🟡 요청 URL:", axiosInstance.defaults.baseURL + "/api/study");
-                console.log("🟢 [API 응답 성공]");
+                console.log("요청 URL:", axiosInstance.defaults.baseURL + "/api/study");
+                console.log("[API 응답 성공]");
                 console.log("응답 전체:", response);
                 console.log("응답 데이터:", response.data);
+
                 if (response.data.code === 201) {
                     const formattedMembers: Member[] = response.data.data.memberList.map(
-                        (member: { username: string; profileImage: string }) => ({
-                            image: member.profileImage || basicImage,
+                        (member: { username: string; }) => ({
                             name: member.username,
                         })
                     );
@@ -58,6 +58,8 @@ const Study = () => {
         .fill(null)
         .concat(Array.from({ length: lastDate }, (_, i) => i + 1));
 
+    const todayDate = now.getDate();
+
     const navigate = useNavigate();
     const onClick = () => {
         navigate("/editor");
@@ -70,7 +72,7 @@ const Study = () => {
                 <div className={styles.innerFrame}>
                     <MemberSection members={members} />
                     <RulesSection />
-                    <CalendarSection month={month} calendar={calendar} />
+                    <CalendarSection month={month} calendar={calendar} todayDate={todayDate}/>
                 </div>
                 <div className={styles.buttonDiv}>
                     <button type="button" className={styles.problemButton} onClick={() => onClick()}>
