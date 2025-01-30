@@ -8,12 +8,14 @@ const axiosInstance = axios.create({
     },
 });
 
-// 요청 인터셉터 설정 (모든 요청에 Authorization 헤더 추가)
+// 요청 인터셉터 설정: 모든 요청에 Authorization header 추가
 axiosInstance.interceptors.request.use(
     (config) => {
-        const token = localStorage.getItem("jwt"); // 로컬 스토리지에서 토큰 가져오기
+        const token = localStorage.getItem("token"); // local storage에서 token 가져오기
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
+        } else {
+            console.warn("토큰이 없습니다. 로그인 상태를 확인하세요.");
         }
         return config;
     },
