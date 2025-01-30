@@ -28,6 +28,10 @@ export const useFetchProblem = () => {
                     todayDate.getDate().toString().padStart(2, "0");
 
                 console.log("📡 API 요청 URL:", `/api/problem?date=${date}`);
+                console.log(
+                    "🌍 axiosInstance baseURL:",
+                    axiosInstance.defaults.baseURL
+                );
 
                 // API 호출
                 const response = await axiosInstance.get(

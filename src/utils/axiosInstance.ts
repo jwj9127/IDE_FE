@@ -1,5 +1,7 @@
 import axios from "axios";
 
+console.log("🔍 환경 변수 REACT_APP_BASE_URL:", process.env.REACT_APP_BASE_URL);
+
 // Axios 인스턴스 생성
 const axiosInstance = axios.create({
     baseURL: process.env.REACT_APP_BASE_URL, // 환경변수에서 API 기본 URL 설정
