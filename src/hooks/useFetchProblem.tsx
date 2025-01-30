@@ -36,7 +36,7 @@ export const useFetchProblem = () => {
                 );
                 console.log("📡 API 요청 URL:", apiUrl);
 
-                // ✅ 실제 요청이 서버로 전송되었는지 확인하기 위해 타임스탬프 추가
+                // ✅ 요청 시작 시간 기록
                 console.time("⏳ API 요청 시간");
 
                 // API 호출
@@ -52,7 +52,10 @@ export const useFetchProblem = () => {
                 console.log("✅ 서버 응답:", response.data);
 
                 if (response.data.code === 201) {
-                    setProblem(response.data.data);
+                    setProblem({
+                        problemId: response.data.data.problemId,
+                        content: response.data.data.content,
+                    });
                 } else {
                     const errorMessage =
                         response.data.message ||
