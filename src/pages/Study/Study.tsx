@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axiosInstance from "../../utils/axiosInstance"; 
 import MemberSection from "./MemberSection";
 import RulesSection from "./RulesSection";
@@ -33,6 +33,7 @@ const Study = () => {
                     console.error("스터디 정보를 불러오는데 실패했습니다.");
                     // 로그 출력용 코드
                     console.log("response.data.code = ", response.data.code);
+                    console.log("response.data = ", response.data);
                     console.log("process.env.REACT_APP_BASE_URL = ", process.env.REACT_APP_BASE_URL);
                 }
             } catch (error) {
