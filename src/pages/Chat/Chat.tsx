@@ -46,6 +46,7 @@ const Chat = () => {
     });
 
     client.activate();
+    console.log(client.activate());
   }, []);
 
   const sendMessage = () => {
