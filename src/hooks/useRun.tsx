@@ -20,8 +20,7 @@ export const useRun = () => {
 
             console.log("서버 응답:", response.data);
 
-            // ✅ 실행 결과 반환
-            return response.data.result || "결과가 없습니다.";
+            return response.data.resultMessage || "결과 메시지가 없습니다.";
         } catch (error: any) {
             console.error("코드 실행 실패:", error);
 

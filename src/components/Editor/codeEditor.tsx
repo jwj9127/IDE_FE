@@ -22,9 +22,9 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ onMount }) => {
             setTimeout(() => setIsModalOpen(false), 3000);
         },
         getCode,
-        problemId: 1, // ✅ 문제 ID를 실제 문제에 맞게 동적으로 전달 가능
+        problemId: 1,
         onTimeEnd: () => {
-            setIsEditorDisabled(true); // ✅ 시간이 종료되면 수정 불가능
+            setIsEditorDisabled(true);
         },
     });
 
@@ -71,7 +71,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ onMount }) => {
                             fontSize: 14,
                             minimap: { enabled: false },
                             scrollBeyondLastLine: false,
-                            readOnly: isEditorDisabled, // ✅ 시간이 종료되면 읽기 전용
+                            readOnly: isEditorDisabled,
                         }}
                         onMount={handleEditorDidMount}
                     />
