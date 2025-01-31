@@ -33,8 +33,8 @@ const Chat = () => {
             setMessages((prev) => [...prev, receivedMessage]);
           }
         });
-        console.log(client.activate());
         setStompClient(client);
+        console.log(stompClient);
       },
 
       onDisconnect: () => {
