@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 const Chat = () => {
     const [stompClient, setStompClient] = useState<any>(null);
     const baseURL = `wss://${process.env.REACT_APP_BASE_URL}/ws/chat`;
+    // const baseURL = "wss://codeable.duckdns.org/ws/chat";
 
     // 채팅 메시지 상태 (닉네임과 텍스트를 저장)
     const [messages, setMessages] = useState<{ user: string; text: string }[]>(
@@ -72,18 +73,40 @@ const Chat = () => {
     }, [stompClient]);
 
     // 메시지 전송 함수
+    // const sendMessage = () => {
+    //     if (input.trim() && stompClient) {
+    //         const message = {
+    //             studyName: "testStudy",
+    //             sender: userNickname,
+    //             message: input,
+    //             timestamp: new Date().toISOString(),
+    //         };
+    //         stompClient.send("/publish/room", {}, JSON.stringify(message));
+    //         setInput(""); // 입력 필드 초기화
+    //     }
+    // };
+
+
     const sendMessage = () => {
         if (input.trim() && stompClient) {
+            const now = new Date();
+            now.setMinutes(now.getMinutes() - now.getTimezoneOffset()); // UTC -> Local 변환
+            const formattedTimestamp = now.toISOString().split(".")[0];
+    
             const message = {
                 studyName: "testStudy",
                 sender: userNickname,
                 message: input,
-                timestamp: new Date().toISOString(),
+                timestamp: formattedTimestamp, // 한국 시간 반영, 형식 일치 확인
             };
+    
             stompClient.send("/publish/room", {}, JSON.stringify(message));
-            setInput(""); // 입력 필드 초기화
+            setMessages((prevMessages) => [...prevMessages, { user: userNickname, text: input }]);
+            setInput(""); 
         }
     };
+      
+    
 
     // Enter 키를 눌렀을 때 메시지 전송
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
