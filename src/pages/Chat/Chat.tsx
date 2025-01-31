@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Client } from "@stomp/stompjs";
+import { Stomp } from "@stomp/stompjs";
 import deleteIcon from "../../assets/delete.png";
 import "./Chat.scss";
 import { useNavigate } from "react-router-dom";
-import SockJS from "sockjs-client";
 
 const Chat = () => {
   const [stompClient, setStompClient] = useState<any>(null);
@@ -19,8 +18,8 @@ const Chat = () => {
   const userNickname = localStorage.getItem("name");
 
   useEffect(() => {
-    const client = new Client({
-      webSocketFactory: () => new SockJS(baseURL),
+    const client = Stomp.over({
+      brokerURL: baseURL,
       connectHeaders: {
         Authorization: authHeader,
       } as { Authorization: string },
@@ -43,7 +42,7 @@ const Chat = () => {
         console.log("WebSocket disconnected");
       },
 
-      onStompError: (error) => {
+      onStompError: (error: any) => {
         console.error("WebSocket 연결 실패:", error);
       },
     });
