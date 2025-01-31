@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import "./codeEditor.scss";
+import styles from "./codeEditor.module.scss";
 import { useTimer } from "../../hooks/useTimer";
 import ModalTimer from "../Modal/modalTimer";
 import Editor, { OnMount } from "@monaco-editor/react";
@@ -64,9 +64,9 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ onMount, problemId }) => {
 
     return (
         <>
-            <div className="code-editor">
-                <div className="timer">남은 시간 {formatTime(time)}</div>
-                <div className="editor">
+            <div className={styles["code-editor"]}>
+                <div className={styles.timer}>남은 시간 {formatTime(time)}</div>
+                <div className={styles.editor}>
                     <Editor
                         height="100%"
                         defaultLanguage={language}
