@@ -4,8 +4,9 @@ import { Client } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
 import deleteIcon from "../../assets/delete.png";
 import "./Chat.scss";
+import { useNavigate } from "react-router-dom";
 
-const Chat: React.FC = () => {
+const Chat = () => {
     const [stompClient, setStompClient] = useState<any>(null);
     const baseURL = `wss://${process.env.REACT_APP_BASE_URL}/ws/chat`;
 
@@ -14,7 +15,10 @@ const Chat: React.FC = () => {
         []
     );
     const [input, setInput] = useState(""); // 입력 필드 상태
-    const userNickname = "코딩왕비빔밥님"; // 현재 사용자의 닉네임 (Kakao API로 가져와야 함)
+
+    const storedName = localStorage.getItem("name"); // 로그인한 멤버 정보 가져오기 (localStorage에서)
+    const userNickname = storedName ? storedName : "코딩왕비빔밥님"; // 현재 사용자의 닉네임 (Kakao API로 가져와야 함)
+
     const authHeader = window.localStorage.getItem("token") || "";
     const today = new Date().toISOString().slice(0, 10);
 
@@ -86,16 +90,14 @@ const Chat: React.FC = () => {
         if (e.key === "Enter") sendMessage();
     };
 
-    // "나가기" 버튼 클릭 시 페이지 이동 (window.location 사용)
+    const navigate = useNavigate();
     const handleExit = () => {
-        window.location.href = "/study"; // "/study" 경로로 이동
+        navigate("/study");
     };
 
     return (
         <div className="chat-container">
-            {/* 상단 헤더 */}
             <div className="chat-ground">
-                {/* 채팅 메시지 박스 */}
                 <div className="chat-box">
                     {messages.map((msg, index) => (
                         <div
@@ -106,14 +108,12 @@ const Chat: React.FC = () => {
                                     : "other-message"
                             }`}
                         >
-                            {/* 닉네임 표시 */}
                             <span className="nickname">{msg.user}</span>
                             <p>{msg.text}</p>
                         </div>
                     ))}
                 </div>
 
-                {/* 하단 입력 및 버튼 */}
                 <footer className="chat-footer">
                     <input
                         type="text"
@@ -125,15 +125,13 @@ const Chat: React.FC = () => {
                     <button onClick={sendMessage}>보내기</button>
                 </footer>
             </div>
-            <div className="deleteIcon">
-                <Link to="/study">
-                    <img
-                        src={deleteIcon}
-                        alt="delete"
-                        className="delete-image"
-                    />
-                </Link>
-            </div>
+            <button className="deleteIcon" onClick={handleExit}>
+                <img
+                    src={deleteIcon}
+                    alt="delete"
+                    className="delete-image"
+                />
+            </button>
         </div>
     );
 };
