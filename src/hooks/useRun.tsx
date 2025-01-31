@@ -28,7 +28,12 @@ export const useRun = () => {
 
             console.log("✅ 서버 응답:", response.data);
 
-            return response.data.resultMessage || "결과 메시지가 없습니다.";
+            // ✅ resultMessage에서 필요한 부분 추출
+            const resultMessage: string =
+                response.data.resultMessage || "결과 메시지가 없습니다.";
+            const extractedResults = extractResults(resultMessage);
+
+            return extractedResults || "결과를 처리할 수 없습니다.";
         } catch (error: any) {
             console.error("❌ 코드 실행 실패:", error);
 
@@ -45,6 +50,19 @@ export const useRun = () => {
                 return "알 수 없는 오류가 발생했습니다.";
             }
         }
+    };
+
+    // ✅ Result:와 Input: 사이의 텍스트 추출 함수
+    const extractResults = (message: string): string => {
+        const regex = /Result:\s*(.*?)\s*Input:/g;
+        let match;
+        const results: string[] = [];
+
+        while ((match = regex.exec(message)) !== null) {
+            results.push(match[1].trim());
+        }
+
+        return results.join("\n");
     };
 
     return { runCode };
