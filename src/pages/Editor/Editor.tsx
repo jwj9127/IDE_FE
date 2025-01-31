@@ -11,18 +11,18 @@ const Editor: React.FC = () => {
     const { runCode } = useRun();
     const [output, setOutput] = useState<string>("");
 
-    const saveCodeToLocalStorage = () => {
-        if (editorRef.current) {
-            const code = editorRef.current.getValue()?.trim();
-            if (code) {
-                localStorage.setItem("code", code); // 코드 저장
-                console.log("🗄️ 로컬 스토리지에 코드 저장:", code);
-            }
-        }
+    const handleCodeChange = (code: string) => {
+        localStorage.setItem("code", code); // 코드 저장
+        console.log("🗄️ 로컬 스토리지에 코드 저장:", code);
     };
 
     const handleCodeEditorMount = (editor: any) => {
         editorRef.current = editor;
+
+        editor.onDidChangeModelContent(() => {
+            const currentCode = editor.getValue()?.trim();
+            handleCodeChange(currentCode);
+        });
     };
 
     const handleProblemLoad = (id: number) => {
@@ -57,11 +57,6 @@ const Editor: React.FC = () => {
         const result = await runCode({ code, problemId, language: "python" });
         setOutput(result);
     };
-
-    useEffect(() => {
-        const interval = setInterval(saveCodeToLocalStorage, 2000);
-        return () => clearInterval(interval);
-    }, []);
 
     return (
         <div className="content">
