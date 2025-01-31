@@ -35,6 +35,7 @@ const Chat = () => {
           }
         });
         setStompClient(client);
+        client.activate();
       },
 
       onDisconnect: () => {
@@ -45,8 +46,6 @@ const Chat = () => {
         console.error("WebSocket 연결 실패:", error);
       },
     });
-
-    client.activate();
 
     return () => {
       client.deactivate();
