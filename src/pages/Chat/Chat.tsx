@@ -56,7 +56,7 @@ const Chat = () => {
     return () => {
       client.deactivate();
     };
-  }, [stompClient]);
+  }, []);
 
   // 메시지 전송 함수
   // const sendMessage = () => {
