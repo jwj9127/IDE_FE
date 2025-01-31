@@ -17,6 +17,8 @@ const Chat = () => {
   const authHeader = window.localStorage.getItem("token") || "";
   const userNickname = localStorage.getItem("name");
 
+  console.log(authHeader);
+
   useEffect(() => {
     const client = new Client({
       brokerURL: baseURL,
@@ -33,6 +35,7 @@ const Chat = () => {
             setMessages((prev) => [...prev, receivedMessage]);
           }
         });
+        console.log(client);
         setStompClient(client);
         console.log(stompClient);
       },
