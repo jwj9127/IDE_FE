@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import "./Editor.scss";
 import Question from "../../components/Editor/question";
 import Output from "../../components/Editor/output";
@@ -10,6 +10,16 @@ const Editor: React.FC = () => {
     const [problemId, setProblemId] = useState<number | null>(null);
     const { runCode } = useRun();
     const [output, setOutput] = useState<string>("");
+
+    const saveCodeToLocalStorage = () => {
+        if (editorRef.current) {
+            const code = editorRef.current.getValue()?.trim();
+            if (code) {
+                localStorage.setItem("code", code); // 코드 저장
+                console.log("🗄️ 로컬 스토리지에 코드 저장:", code);
+            }
+        }
+    };
 
     const handleCodeEditorMount = (editor: any) => {
         editorRef.current = editor;
@@ -38,9 +48,6 @@ const Editor: React.FC = () => {
             return;
         }
 
-        localStorage.setItem("code", code);
-        localStorage.setItem("problemId", problemId.toString());
-
         console.log("📡 코드 실행 요청:", {
             code,
             problemId,
@@ -50,6 +57,11 @@ const Editor: React.FC = () => {
         const result = await runCode({ code, problemId, language: "python" });
         setOutput(result);
     };
+
+    useEffect(() => {
+        const interval = setInterval(saveCodeToLocalStorage, 2000);
+        return () => clearInterval(interval);
+    }, []);
 
     return (
         <div className="content">

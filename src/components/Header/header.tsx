@@ -25,7 +25,6 @@ const Header: React.FC = () => {
         navigate("/");
     };
 
-    // 모달 닫기 핸들러
     const handleCloseModal = () => {
         setIsModalOpen(false);
     };
@@ -48,7 +47,6 @@ const Header: React.FC = () => {
             const result = await runCode({ code, problemId, language });
             console.log("✅ 제출 결과:", result);
 
-            // 제출 완료 후 로컬 스토리지에서 code와 problemId 삭제
             localStorage.removeItem("code");
             localStorage.removeItem("problemId");
             console.log("🗑️ 로컬 스토리지에서 code와 problemId 삭제 완료");
@@ -60,7 +58,6 @@ const Header: React.FC = () => {
         }
     };
 
-    // 현재 라우터 경로에 따라 버튼 렌더링
     const renderNavContent = () => {
         if (location.pathname === "/editor") {
             return (

@@ -19,7 +19,6 @@ export const useRun = () => {
                 language: data.language,
             });
 
-            // Axios 인스턴스 사용
             const response = await axiosInstance.post(API_URL, {
                 code: data.code,
                 problemId: data.problemId,
@@ -28,7 +27,6 @@ export const useRun = () => {
 
             console.log("✅ 서버 응답:", response.data);
 
-            // ✅ resultMessage에서 필요한 부분 추출
             const resultMessage: string =
                 response.data.resultMessage || "결과 메시지가 없습니다.";
             const extractedResults = extractResults(resultMessage);
@@ -52,7 +50,6 @@ export const useRun = () => {
         }
     };
 
-    // ✅ Result:와 Input: 사이의 텍스트 추출 함수
     const extractResults = (message: string): string => {
         const regex = /Result:\s*(.*?)\s*Input:/g;
         let match;
