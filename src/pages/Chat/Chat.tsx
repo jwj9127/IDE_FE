@@ -33,7 +33,6 @@ const Chat = () => {
             setMessages((prev) => [...prev, receivedMessage]);
           }
         });
-        client.activate();
         console.log(client.activate());
         setStompClient(client);
       },
@@ -46,6 +45,7 @@ const Chat = () => {
         console.error("WebSocket 연결 실패:", error);
       },
     });
+    client.activate();
   }, []);
 
   const sendMessage = () => {
