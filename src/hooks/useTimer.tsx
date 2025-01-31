@@ -48,22 +48,26 @@ export const useTimer = ({
         };
     }, [time]);
 
-    // ✅ 시간이 종료되었을 때 실행
     const handleTimeEnd = async () => {
-        onTimeEnd?.(); // ✅ Monaco Editor 수정 불가능 설정
+        onTimeEnd?.();
         const code = getCode().trim();
 
         if (!code) {
             console.warn("🚨 실행할 코드가 없습니다.");
-            navigate("/chat"); // ✅ 코드가 없을 경우 바로 이동
+            navigate("/chat");
             return;
         }
 
         console.log("🚀 시간이 종료되어 자동 실행:", { problemId, code });
 
-        await runCode({ code, remainingTime: "00:00", problemId });
-
-        navigate("/chat"); // ✅ 실행 후 페이지 이동
+        try {
+            // ✅ language를 항상 "python"으로 설정
+            await runCode({ code, problemId, language: "python" });
+            navigate("/chat"); // 실행 완료 후 이동
+        } catch (error) {
+            console.error("🚨 코드 실행 중 오류 발생:", error);
+            navigate("/error"); // 에러 발생 시 에러 페이지로 이동
+        }
     };
 
     return { time };
