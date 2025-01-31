@@ -17,6 +17,7 @@ const Editor: React.FC = () => {
 
     const handleProblemLoad = (id: number) => {
         setProblemId(id);
+        localStorage.setItem("problemId", id.toString());
     };
 
     const handleRun = async () => {
@@ -36,6 +37,9 @@ const Editor: React.FC = () => {
             alert("코드를 입력해주세요.");
             return;
         }
+
+        localStorage.setItem("code", code);
+        localStorage.setItem("problemId", problemId.toString());
 
         console.log("📡 코드 실행 요청:", {
             code,
