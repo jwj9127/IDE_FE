@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useModal } from "../../hooks/useModal";
 import { ModalProps } from "./modal.types";
-import styles from "./modal.module.scss"; // CSS Modules import
+import styles from "./modal.module.scss";
 
 const ModalBack: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     const navigate = useNavigate();

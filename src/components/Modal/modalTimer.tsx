@@ -1,7 +1,7 @@
 import React from "react";
 import { useModal } from "../../hooks/useModal";
 import { ModalProps } from "./modal.types";
-import styles from "./modal.module.scss"; // CSS Modules import
+import styles from "./modal.module.scss";
 
 const ModalTimer: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     const { animation } = useModal(isOpen, onClose);

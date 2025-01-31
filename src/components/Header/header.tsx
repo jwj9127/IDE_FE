@@ -3,13 +3,13 @@ import { useLocation, useNavigate } from "react-router-dom";
 import styles from "./header.module.scss";
 import logo from "../../assets/logo.png";
 import ModalBack from "../Modal/modalBack";
-import { useRun } from "../../hooks/useRun";
+import ModalSubmit from "../Modal/modalSubmit";
 
 const Header: React.FC = () => {
     const location = useLocation();
     const navigate = useNavigate();
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const { runCode } = useRun();
+    const [isBackModalOpen, setIsBackModalOpen] = useState(false);
+    const [isSubmitModalOpen, setIsSubmitModalOpen] = useState(false);
 
     const handleLogoClick = () => {
         const token = localStorage.getItem("token");
@@ -25,33 +25,20 @@ const Header: React.FC = () => {
         navigate("/");
     };
 
-    const handleCloseModal = () => {
-        setIsModalOpen(false);
+    const handleOpenModal = () => {
+        setIsBackModalOpen(true);
     };
 
-    const handleSubmit = async () => {
-        try {
-            const code = localStorage.getItem("code") || "";
-            const problemId = parseInt(
-                localStorage.getItem("problemId") || "0"
-            );
-            const language = "python";
+    const handleCloseModal = () => {
+        setIsBackModalOpen(false);
+    };
 
-            if (!code) {
-                alert("코드를 입력해주세요.");
-                return;
-            }
+    const handleOpenSubmitModal = () => {
+        setIsSubmitModalOpen(true);
+    };
 
-            const result = await runCode({ code, problemId, language });
-
-            localStorage.removeItem("code");
-            localStorage.removeItem("problemId");
-
-            navigate("/chat");
-        } catch (error) {
-            console.error("❌ 제출 실패:", error);
-            alert("제출 중 오류가 발생했습니다.");
-        }
+    const handleCloseSubmitModal = () => {
+        setIsSubmitModalOpen(false);
     };
 
     const renderNavContent = () => {
@@ -60,13 +47,13 @@ const Header: React.FC = () => {
                 <>
                     <button
                         className={styles["nav-button"]}
-                        onClick={handleSubmit}
+                        onClick={handleOpenSubmitModal}
                     >
                         제출하기
                     </button>
                     <button
                         className={styles["nav-button"]}
-                        onClick={() => setIsModalOpen(true)}
+                        onClick={handleOpenModal}
                     >
                         나가기
                     </button>
@@ -97,7 +84,11 @@ const Header: React.FC = () => {
                 </div>
                 <nav className={styles.nav}>{renderNavContent()}</nav>
             </header>
-            <ModalBack isOpen={isModalOpen} onClose={handleCloseModal} />
+            <ModalBack isOpen={isBackModalOpen} onClose={handleCloseModal} />
+            <ModalSubmit
+                isOpen={isSubmitModalOpen}
+                onClose={handleCloseSubmitModal}
+            />
         </>
     );
 };
