@@ -34,7 +34,6 @@ const Chat = () => {
           }
         });
         setStompClient(client);
-        client.activate();
       },
 
       onDisconnect: () => {
@@ -46,8 +45,11 @@ const Chat = () => {
       },
     });
 
+    client.activate();
     return () => {
-      client.deactivate();
+      if (client) {
+        client.deactivate();
+      }
     };
   }, []);
 
