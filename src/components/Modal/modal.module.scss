@@ -1,6 +1,7 @@
 $modal-bg: rgba(0, 0, 0, 0.5);
 $modal-color: #000000;
 $modal-wrap: #d9d9d9;
+$modal-btnbg: #dfdfdf;
 
 @keyframes slideUp {
     from {
@@ -59,8 +60,8 @@ $modal-wrap: #d9d9d9;
     .modal-wrap {
         box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
         border-radius: 20px;
-        width: 250px;
-        height: 120px;
+        width: 448px;
+        height: 240px;
         z-index: 2;
         background-color: $modal-wrap;
         display: flex;
@@ -75,12 +76,21 @@ $modal-wrap: #d9d9d9;
         align-items: center;
         justify-content: center;
 
-        .modal-text {
-            font-size: 15px;
-            font-weight: 600;
+        .modal-title {
+            font-size: 24px;
+            font-weight: 400;
             line-height: 17.9px;
             text-align: center;
-            margin-top: 15px;
+            color: $modal-color;
+            white-space: pre-line;
+        }
+
+        .modal-text {
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 17.9px;
+            text-align: center;
+            margin-top: 16px;
             color: $modal-color;
             white-space: pre-line;
         }
@@ -91,16 +101,17 @@ $modal-wrap: #d9d9d9;
             margin-top: 20px;
 
             .close-btn {
-                width: 93px;
-                height: 36px;
-                border-radius: 15px;
-                border: 1px solid $modal-color;
+                width: 180px;
+                height: 84px;
+                border-radius: 16px;
+                border: none;
                 color: $modal-color;
                 cursor: pointer;
-                font-size: 15px;
-                font-weight: 600;
+                font-size: 24px;
+                font-weight: 400;
                 line-height: 17.9px;
                 text-align: center;
+                background-color: $modal-btnbg;
 
                 display: flex;
                 justify-content: center;
@@ -109,8 +120,7 @@ $modal-wrap: #d9d9d9;
                 transition: all 300ms ease-out;
 
                 &:hover {
-                    background-color: $modal-color;
-                    color: #fff;
+                    background-color: #8b8b8b;
                 }
             }
         }

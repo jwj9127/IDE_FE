@@ -41,21 +41,24 @@ const ModalSubmit: React.FC<ModalProps> = ({ isOpen, onClose }) => {
             <div className={`${styles["modal-space"]} ${styles[animation]}`}>
                 <div className={styles["modal-wrap"]}>
                     <div className={styles["modal-content"]}>
+                        <div className={styles["modal-title"]}>
+                            제출하시겠습니까?
+                        </div>
                         <div className={styles["modal-text"]}>
-                            제출하면 다시 돌아올 수 없습니다.
+                            제출 시, 코드 작성 및 수정을 할 수 없습니다.
                         </div>
                         <div className={styles["modal-close"]}>
+                            <button
+                                className={styles["close-btn"]}
+                                onClick={handleSubmit}
+                            >
+                                제출
+                            </button>
                             <button
                                 className={styles["close-btn"]}
                                 onClick={handleClose}
                             >
                                 취소
-                            </button>
-                            <button
-                                className={styles["close-btn"]}
-                                onClick={handleSubmit}
-                            >
-                                제출하기
                             </button>
                         </div>
                     </div>
