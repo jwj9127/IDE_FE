@@ -3,8 +3,8 @@ import axiosInstance from "../utils/axiosInstance";
 
 interface RunData {
     code: string;
-    remainingTime: string;
     problemId: number;
+    language: string;
 }
 
 export const useRun = () => {
@@ -15,7 +15,8 @@ export const useRun = () => {
 
             const response = await axiosInstance.post(API_URL, {
                 code: data.code,
-                remainingTime: data.remainingTime,
+                problemId: data.problemId,
+                language: data.language,
             });
 
             console.log("서버 응답:", response.data);

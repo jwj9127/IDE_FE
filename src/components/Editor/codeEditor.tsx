@@ -5,13 +5,16 @@ import ModalTimer from "../Modal/modalTimer";
 import Editor, { OnMount } from "@monaco-editor/react";
 
 interface CodeEditorProps {
-    onMount: (editor: any, time: string) => void;
+    onMount: (editor: any, code: string, problemId: number) => void;
+    problemId: number;
 }
 
-const CodeEditor: React.FC<CodeEditorProps> = ({ onMount }) => {
+const CodeEditor: React.FC<CodeEditorProps> = ({ onMount, problemId }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isEditorDisabled, setIsEditorDisabled] = useState(false);
     const editorRef = useRef<any>(null);
+
+    const language = "python"; // 언어를 항상 Python으로 고정
 
     const getCode = () => editorRef.current?.getValue() || "";
 
@@ -22,7 +25,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ onMount }) => {
             setTimeout(() => setIsModalOpen(false), 3000);
         },
         getCode,
-        problemId: 1,
+        problemId,
         onTimeEnd: () => {
             setIsEditorDisabled(true);
         },
@@ -38,6 +41,8 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ onMount }) => {
 
     const handleEditorDidMount: OnMount = (editor, monaco) => {
         editorRef.current = editor;
+
+        // Define a custom theme for the editor
         monaco.editor.defineTheme("custom-dark", {
             base: "vs-dark",
             inherit: true,
@@ -49,14 +54,15 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ onMount }) => {
         });
         monaco.editor.setTheme("custom-dark");
 
-        onMount(editor, formatTime(time));
+        // Pass necessary parameters to the onMount callback
+        onMount(editor, getCode(), problemId);
     };
 
     useEffect(() => {
         if (editorRef.current) {
-            onMount(editorRef.current, formatTime(time));
+            onMount(editorRef.current, getCode(), problemId);
         }
-    }, [time, onMount]);
+    }, [time, onMount, problemId]);
 
     return (
         <>
@@ -65,7 +71,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ onMount }) => {
                 <div className="editor">
                     <Editor
                         height="100%"
-                        defaultLanguage="python"
+                        defaultLanguage={language} // 언어를 Python으로 설정
                         defaultValue="// 여기에 코드를 입력하세요"
                         options={{
                             fontSize: 14,
