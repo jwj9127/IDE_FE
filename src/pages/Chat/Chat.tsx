@@ -85,7 +85,7 @@ const Chat = () => {
         timestamp: formattedTimestamp, // 한국 시간 반영, 형식 일치 확인
       };
 
-      stompClient.send("/publish/room", {}, JSON.stringify(message));
+      stompClient.send("/publish/chat/room", {}, JSON.stringify(message));
       setMessages((prevMessages) => [
         ...prevMessages,
         { user: userNickname, text: input },
