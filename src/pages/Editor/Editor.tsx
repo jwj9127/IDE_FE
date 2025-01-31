@@ -7,14 +7,12 @@ import { useRun } from "../../hooks/useRun";
 
 const Editor: React.FC = () => {
     const editorRef = useRef<any>(null);
-    const remainingTimeRef = useRef<string>("");
     const [problemId, setProblemId] = useState<number | null>(null);
     const { runCode } = useRun();
     const [output, setOutput] = useState<string>("");
 
-    const handleCodeEditorMount = (editor: any, time: string) => {
+    const handleCodeEditorMount = (editor: any) => {
         editorRef.current = editor;
-        remainingTimeRef.current = time;
     };
 
     const handleProblemLoad = (id: number) => {
@@ -33,16 +31,19 @@ const Editor: React.FC = () => {
         }
 
         const code = editorRef.current.getValue()?.trim();
-        const remainingTime = remainingTimeRef.current;
 
         if (!code) {
             alert("코드를 입력해주세요.");
             return;
         }
 
-        console.log("📡 코드 실행 요청:", { code, remainingTime, problemId });
+        console.log("📡 코드 실행 요청:", {
+            code,
+            problemId,
+            language: "python",
+        });
 
-        const result = await runCode({ code, remainingTime, problemId });
+        const result = await runCode({ code, problemId, language: "python" });
         setOutput(result);
     };
 
@@ -52,7 +53,16 @@ const Editor: React.FC = () => {
                 <Question onProblemLoad={handleProblemLoad} />
             </div>
             <div className="editor-content">
-                <CodeEditor onMount={handleCodeEditorMount} />
+                {problemId !== null ? (
+                    <CodeEditor
+                        onMount={handleCodeEditorMount}
+                        problemId={problemId}
+                    />
+                ) : (
+                    <div className="editor-placeholder">
+                        문제를 선택해주세요.
+                    </div>
+                )}
                 <Output onRun={handleRun} output={output} />
             </div>
         </div>
