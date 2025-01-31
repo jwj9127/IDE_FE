@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState } from "react";
 import "./Editor.scss";
 import Question from "../../components/Editor/question";
 import Output from "../../components/Editor/output";
@@ -11,23 +11,12 @@ const Editor: React.FC = () => {
     const { runCode } = useRun();
     const [output, setOutput] = useState<string>("");
 
-    const handleCodeChange = (code: string) => {
-        localStorage.setItem("code", code); // 코드 저장
-        console.log("🗄️ 로컬 스토리지에 코드 저장:", code);
-    };
-
     const handleCodeEditorMount = (editor: any) => {
         editorRef.current = editor;
-
-        editor.onDidChangeModelContent(() => {
-            const currentCode = editor.getValue()?.trim();
-            handleCodeChange(currentCode);
-        });
     };
 
     const handleProblemLoad = (id: number) => {
         setProblemId(id);
-        localStorage.setItem("problemId", id.toString());
     };
 
     const handleRun = async () => {
