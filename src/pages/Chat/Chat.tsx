@@ -68,6 +68,7 @@ const Chat = () => {
       };
 
       console.log(message);
+      console.log(stompClient);
 
       stompClient.send("/publish/chat/room", {}, JSON.stringify(message));
       setMessages((prevMessages) => [
