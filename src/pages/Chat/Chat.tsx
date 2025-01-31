@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Stomp } from "@stomp/stompjs";
 import deleteIcon from "../../assets/delete.png";
 import "./Chat.scss";
 import { useNavigate } from "react-router-dom";
+import SockJS from "sockjs-client";
+import { Client } from "@stomp/stompjs";
 
 const Chat = () => {
   const [stompClient, setStompClient] = useState<any>(null);
@@ -18,35 +19,31 @@ const Chat = () => {
   const userNickname = localStorage.getItem("name");
 
   useEffect(() => {
-    const client = Stomp.over({
-      brokerURL: baseURL,
+    const client = new Client({
+      webSocketFactory: () => new SockJS(baseURL),
       connectHeaders: {
         Authorization: authHeader,
       } as { Authorization: string },
-
-      onConnect: () => {
-        console.log("WebSocket open");
-        // 채팅 구독
-        client.subscribe("/subscribe/chat/room/testStudy", (message) => {
-          if (message.body) {
-            const receivedMessage = JSON.parse(message.body);
-            setMessages((prev) => [...prev, receivedMessage]);
-          }
-        });
-        console.log(client);
-        setStompClient(client);
-        console.log(stompClient);
-      },
-
-      onDisconnect: () => {
-        console.log("WebSocket disconnected");
-      },
-
-      onStompError: (error: any) => {
-        console.error("WebSocket 연결 실패:", error);
-      },
+      reconnectDelay: 5000,
+      heartbeatIncoming: 4000,
+      heartbeatOutgoing: 4000,
     });
+
     client.activate();
+
+    client.onConnect = function () {
+      console.log("WebSocket open");
+      // 채팅 구독
+      client.subscribe("/subscribe/chat/room/testStudy", (message: any) => {
+        if (message.body) {
+          const receivedMessage = JSON.parse(message.body);
+          setMessages((prev) => [...prev, receivedMessage]);
+        }
+      });
+      console.log(client);
+      setStompClient(client);
+      console.log(stompClient);
+    };
   }, []);
 
   const sendMessage = () => {
