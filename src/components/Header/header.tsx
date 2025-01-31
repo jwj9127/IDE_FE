@@ -9,7 +9,7 @@ const Header: React.FC = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const { runCode } = useRun(); // useRun 훅 가져오기
+    const { runCode } = useRun();
 
     const handleLogoClick = () => {
         const token = localStorage.getItem("token");
@@ -42,14 +42,10 @@ const Header: React.FC = () => {
                 return;
             }
 
-            console.log("📡 제출 데이터:", { code, problemId, language });
-
             const result = await runCode({ code, problemId, language });
-            console.log("✅ 제출 결과:", result);
 
             localStorage.removeItem("code");
             localStorage.removeItem("problemId");
-            console.log("🗑️ 로컬 스토리지에서 code와 problemId 삭제 완료");
 
             navigate("/chat");
         } catch (error) {

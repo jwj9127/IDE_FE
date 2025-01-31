@@ -42,7 +42,6 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ onMount, problemId }) => {
     const handleEditorDidMount: OnMount = (editor, monaco) => {
         editorRef.current = editor;
 
-        // Define a custom theme for the editor
         monaco.editor.defineTheme("custom-dark", {
             base: "vs-dark",
             inherit: true,
@@ -54,7 +53,6 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ onMount, problemId }) => {
         });
         monaco.editor.setTheme("custom-dark");
 
-        // Pass necessary parameters to the onMount callback
         onMount(editor, getCode(), problemId);
     };
 
@@ -71,7 +69,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ onMount, problemId }) => {
                 <div className="editor">
                     <Editor
                         height="100%"
-                        defaultLanguage={language} // 언어를 Python으로 설정
+                        defaultLanguage={language}
                         defaultValue="// 여기에 코드를 입력하세요"
                         options={{
                             fontSize: 14,
