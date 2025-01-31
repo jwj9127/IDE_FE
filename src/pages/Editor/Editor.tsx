@@ -71,7 +71,7 @@ const Editor: React.FC = () => {
                     />
                 ) : (
                     <div className={styles["editor-placeholder"]}>
-                        문제를 선택해주세요.
+                        코드편집기를 불러오는 중입니다...
                     </div>
                 )}
                 <Output onRun={handleRun} output={output} message={message} />

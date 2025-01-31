@@ -21,11 +21,7 @@ const Question: React.FC<QuestionProps> = ({ onProblemLoad }) => {
         );
     }
 
-    if (error) {
-        return <div className={styles.question}>{error}</div>;
-    }
-
-    if (!problem) {
+    if (!problem || error) {
         return <div className={styles.question}>문제를 찾을 수 없습니다.</div>;
     }
 
