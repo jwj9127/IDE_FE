@@ -10,6 +10,7 @@ const Editor: React.FC = () => {
     const [problemId, setProblemId] = useState<number | null>(null);
     const { runCode } = useRun();
     const [output, setOutput] = useState<string>("");
+    const [message, setMessage] = useState<string>("");
 
     const saveCodeToLocalStorage = () => {
         if (editorRef.current) {
@@ -55,7 +56,8 @@ const Editor: React.FC = () => {
         });
 
         const result = await runCode({ code, problemId, language: "python" });
-        setOutput(result);
+        setOutput(result.extractedResults);
+        setMessage(result.message);
     };
 
     useEffect(() => {
@@ -79,7 +81,7 @@ const Editor: React.FC = () => {
                         문제를 선택해주세요.
                     </div>
                 )}
-                <Output onRun={handleRun} output={output} />
+                <Output onRun={handleRun} output={output} message={message} />
             </div>
         </div>
     );

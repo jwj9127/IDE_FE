@@ -7,8 +7,14 @@ interface RunData {
     language: string;
 }
 
+interface RunResult {
+    message: string; // 서버에서 반환된 메시지
+    resultMessage: string; // 서버에서 반환된 결과 메시지
+    extractedResults: string; // 추출된 결과
+}
+
 export const useRun = () => {
-    const runCode = async (data: RunData): Promise<string> => {
+    const runCode = async (data: RunData): Promise<RunResult> => {
         try {
             const API_URL = `/api/code/submit`;
 
@@ -19,7 +25,6 @@ export const useRun = () => {
                 language: data.language,
             });
 
-            // Axios 인스턴스 사용
             const response = await axiosInstance.post(API_URL, {
                 code: data.code,
                 problemId: data.problemId,
@@ -28,12 +33,18 @@ export const useRun = () => {
 
             console.log("✅ 서버 응답:", response.data);
 
-            // ✅ resultMessage에서 필요한 부분 추출
             const resultMessage: string =
                 response.data.resultMessage || "결과 메시지가 없습니다.";
+            const message: string =
+                response.data.message || "메시지가 없습니다.";
             const extractedResults = extractResults(resultMessage);
 
-            return extractedResults || "결과를 처리할 수 없습니다.";
+            return {
+                message,
+                resultMessage,
+                extractedResults:
+                    extractedResults || "결과를 처리할 수 없습니다.",
+            };
         } catch (error: any) {
             console.error("❌ 코드 실행 실패:", error);
 
@@ -42,17 +53,26 @@ export const useRun = () => {
                     "❌ AxiosError 응답 데이터:",
                     error.response?.data
                 );
-                return `코드 실행 중 오류가 발생했습니다: ${
-                    error.response?.data?.message || error.message
-                }`;
+                return {
+                    message:
+                        error.response?.data?.message ||
+                        "코드 실행 중 오류가 발생했습니다.",
+                    resultMessage:
+                        error.response?.data?.resultMessage ||
+                        "결과 메시지가 없습니다.",
+                    extractedResults: "결과를 처리할 수 없습니다.",
+                };
             } else {
                 console.error("❌ 알 수 없는 오류:", error);
-                return "알 수 없는 오류가 발생했습니다.";
+                return {
+                    message: "알 수 없는 오류가 발생했습니다.",
+                    resultMessage: "결과 메시지가 없습니다.",
+                    extractedResults: "결과를 처리할 수 없습니다.",
+                };
             }
         }
     };
 
-    // ✅ Result:와 Input: 사이의 텍스트 추출 함수
     const extractResults = (message: string): string => {
         const regex = /Result:\s*(.*?)\s*Input:/g;
         let match;
