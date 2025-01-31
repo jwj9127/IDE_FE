@@ -10,13 +10,13 @@ const Editor: React.FC = () => {
     const [problemId, setProblemId] = useState<number | null>(null);
     const { runCode } = useRun();
     const [output, setOutput] = useState<string>("");
+    const [message, setMessage] = useState<string>("");
 
     const saveCodeToLocalStorage = () => {
         if (editorRef.current) {
             const code = editorRef.current.getValue()?.trim();
             if (code) {
                 localStorage.setItem("code", code); // 코드 저장
-                console.log("🗄️ 로컬 스토리지에 코드 저장:", code);
             }
         }
     };
@@ -48,14 +48,9 @@ const Editor: React.FC = () => {
             return;
         }
 
-        console.log("📡 코드 실행 요청:", {
-            code,
-            problemId,
-            language: "python",
-        });
-
         const result = await runCode({ code, problemId, language: "python" });
-        setOutput(result);
+        setOutput(result.extractedResults);
+        setMessage(result.message);
     };
 
     useEffect(() => {
@@ -75,11 +70,9 @@ const Editor: React.FC = () => {
                         problemId={problemId}
                     />
                 ) : (
-                    <div className="editor-placeholder">
-                        문제를 선택해주세요.
-                    </div>
+                    <div className="editor-placeholder"></div>
                 )}
-                <Output onRun={handleRun} output={output} />
+                <Output onRun={handleRun} output={output} message={message} />
             </div>
         </div>
     );
