@@ -8,8 +8,11 @@ import { useRun } from "../../hooks/useRun";
 const ModalSubmit: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     const navigate = useNavigate();
     const { runCode } = useRun();
-
-    const { animation, handleClose } = useModal(isOpen, onClose);
+    const { animation, handleClose, handleNavigate } = useModal(
+        isOpen,
+        onClose,
+        "/chat"
+    );
 
     const handleSubmit = async () => {
         try {
@@ -29,11 +32,7 @@ const ModalSubmit: React.FC<ModalProps> = ({ isOpen, onClose }) => {
             localStorage.removeItem("code");
             localStorage.removeItem("problemId");
 
-            onClose();
-
-            setTimeout(() => {
-                navigate("/chat");
-            }, 100);
+            handleNavigate(navigate);
         } catch (error) {
             console.error("❌ 제출 실패:", error);
             alert("제출 중 오류가 발생했습니다.");
