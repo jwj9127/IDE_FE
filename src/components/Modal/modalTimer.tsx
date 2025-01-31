@@ -11,7 +11,7 @@ const ModalTimer: React.FC<ModalProps> = ({ isOpen, onClose }) => {
             <div className={`${styles["modal-space"]} ${styles[animation]}`}>
                 <div className={styles["modal-wrap"]}>
                     <div className={styles["modal-content"]}>
-                        <div className={styles["modal-text"]}>
+                        <div className={styles["modal-title"]}>
                             종료까지 5분 남았습니다.
                         </div>
                     </div>
