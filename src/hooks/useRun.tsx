@@ -52,15 +52,15 @@ export const useRun = () => {
                     error.response?.data
                 );
                 return {
-                    message: "코드 실행 중 오류가 발생했습니다.",
-                    resultMessage: "결과 메시지가 없습니다.",
+                    message: "결과를 처리할 수 없습니다.",
+                    resultMessage: "코드 실행 중 오류가 발생했습니다.",
                     extractedResults: "코드 실행 중 오류가 발생했습니다.",
                 };
             } else {
                 console.error("❌ 알 수 없는 오류:", error);
                 return {
-                    message: "코드 실행 중 오류가 발생했습니다.",
-                    resultMessage: "결과를 처리할 수 없습니다.",
+                    message: "결과를 처리할 수 없습니다.",
+                    resultMessage: "코드 실행 중 오류가 발생했습니다.",
                     extractedResults: "코드 실행 중 오류가 발생했습니다.",
                 };
             }
