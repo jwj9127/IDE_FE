@@ -69,7 +69,7 @@ const Chat = () => {
       console.log("message 형식 => " + message);
       console.log("send 보낼 때 stompClient => " + stompClient);
 
-      stompClient.send("/publish/chat/room", {}, JSON.stringify(message));
+      stompClient.send("/publish/room", {}, JSON.stringify(message));
       setMessages((prevMessages) => [
         ...prevMessages,
         { user: userNickname, text: input },
