@@ -29,7 +29,11 @@ const ModalSubmit: React.FC<ModalProps> = ({ isOpen, onClose }) => {
             localStorage.removeItem("code");
             localStorage.removeItem("problemId");
 
-            navigate("/chat");
+            onClose();
+
+            setTimeout(() => {
+                navigate("/chat");
+            }, 100);
         } catch (error) {
             console.error("❌ 제출 실패:", error);
             alert("제출 중 오류가 발생했습니다.");
