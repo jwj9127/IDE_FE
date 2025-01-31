@@ -17,6 +17,8 @@ const Chat = () => {
   const authHeader = window.localStorage.getItem("token") || "";
   const userNickname = localStorage.getItem("name");
 
+  console.log("헤더 토큰 => " + authHeader);
+
   useEffect(() => {
     const client = new Client({
       brokerURL: baseURL,
@@ -33,15 +35,21 @@ const Chat = () => {
             setMessages((prev) => [...prev, receivedMessage]);
           }
         });
+        console.log("웹 소켓 연결 시점에서 client 상태 => " + client);
+        setStompClient(client);
+        console.log("setStompClient 설정한 후 StompClient => " + stompClient);
+      },
+
+      onDisconnect: () => {
+        console.log("WebSocket disconnected");
+      },
+
+      onStompError: (error) => {
+        console.error("WebSocket 연결 실패:", error);
       },
     });
-    client.activate();
 
-    setTimeout(() => {
-      if (client && client.connected) {
-        setStompClient(client);
-      }
-    }, 1000);
+    client.activate();
   }, []);
 
   const sendMessage = () => {
@@ -58,19 +66,15 @@ const Chat = () => {
         timestamp: formattedTimestamp, // 한국 시간 반영, 형식 일치 확인
       };
 
-      console.log(message);
-      console.log(stompClient);
+      console.log("message 형식 => " + message);
+      console.log("send 보낼 때 stompClient => " + stompClient);
 
-      if (stompClient.connected === true) {
-        stompClient.send("/publish/chat/room", {}, JSON.stringify(message));
-        setMessages((prevMessages) => [
-          ...prevMessages,
-          { user: userNickname, text: input },
-        ]);
-        setInput("");
-      } else {
-        console.log(stompClient + "연결이 안됐어요");
-      }
+      stompClient.send("/publish/chat/room", {}, JSON.stringify(message));
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { user: userNickname, text: input },
+      ]);
+      setInput("");
     }
   };
 
