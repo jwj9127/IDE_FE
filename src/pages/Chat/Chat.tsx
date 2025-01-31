@@ -28,16 +28,18 @@ const Chat = () => {
 
       onConnect: () => {
         console.log("WebSocket open");
-        // 채팅 구독
-        client.subscribe("/subscribe/chat/room/testStudy", (message) => {
-          if (message.body) {
-            const receivedMessage = JSON.parse(message.body);
-            setMessages((prev) => [...prev, receivedMessage]);
-          }
-        });
-        console.log(client);
-        setStompClient(client);
-        console.log(stompClient);
+        if (client.connected === true) {
+          // 채팅 구독
+          client.subscribe("/subscribe/chat/room/testStudy", (message) => {
+            if (message.body) {
+              const receivedMessage = JSON.parse(message.body);
+              setMessages((prev) => [...prev, receivedMessage]);
+            }
+          });
+          console.log(client);
+          setStompClient(client);
+          console.log(stompClient);
+        }
       },
 
       onDisconnect: () => {
