@@ -1,17 +1,17 @@
 import React from "react";
 import { useModal } from "../../hooks/useModal";
 import { ModalProps } from "./modal.types";
-import "./modal.scss";
+import styles from "./modal.module.scss"; // CSS Modules import
 
 const ModalTimer: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     const { animation } = useModal(isOpen, onClose);
 
     return isOpen ? (
-        <div className="modal-overlay">
-            <div className={`modal-space ${animation}`}>
-                <div className="modal-wrap">
-                    <div className="modal-content">
-                        <div className="modal-text">
+        <div className={styles["modal-overlay"]}>
+            <div className={`${styles["modal-space"]} ${styles[animation]}`}>
+                <div className={styles["modal-wrap"]}>
+                    <div className={styles["modal-content"]}>
+                        <div className={styles["modal-text"]}>
                             종료까지 5분 남았습니다.
                         </div>
                     </div>

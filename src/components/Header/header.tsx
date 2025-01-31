@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import "./header.scss";
+import styles from "./header.module.scss";
 import logo from "../../assets/logo.png";
 import ModalBack from "../Modal/modalBack";
 import { useRun } from "../../hooks/useRun";
@@ -58,11 +58,14 @@ const Header: React.FC = () => {
         if (location.pathname === "/editor") {
             return (
                 <>
-                    <button className="nav-button" onClick={handleSubmit}>
+                    <button
+                        className={styles["nav-button"]}
+                        onClick={handleSubmit}
+                    >
                         제출하기
                     </button>
                     <button
-                        className="nav-button"
+                        className={styles["nav-button"]}
                         onClick={() => setIsModalOpen(true)}
                     >
                         나가기
@@ -74,7 +77,7 @@ const Header: React.FC = () => {
             location.pathname === "/study"
         ) {
             return (
-                <button className="nav-button" onClick={handleLogout}>
+                <button className={styles["nav-button"]} onClick={handleLogout}>
                     로그아웃
                 </button>
             );
@@ -84,11 +87,15 @@ const Header: React.FC = () => {
 
     return (
         <>
-            <header className="header">
-                <div className="logo" onClick={handleLogoClick}>
-                    <img src={logo} alt="Codable" className="logo-image" />
+            <header className={styles.header}>
+                <div className={styles.logo} onClick={handleLogoClick}>
+                    <img
+                        src={logo}
+                        alt="Codable"
+                        className={styles["logo-image"]}
+                    />
                 </div>
-                <nav className="nav">{renderNavContent()}</nav>
+                <nav className={styles.nav}>{renderNavContent()}</nav>
             </header>
             <ModalBack isOpen={isModalOpen} onClose={handleCloseModal} />
         </>

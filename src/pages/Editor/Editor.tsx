@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
-import "./Editor.scss";
+import styles from "./Editor.module.scss";
 import Question from "../../components/Editor/question";
 import Output from "../../components/Editor/output";
 import CodeEditor from "../../components/Editor/codeEditor";
@@ -59,18 +59,20 @@ const Editor: React.FC = () => {
     }, []);
 
     return (
-        <div className="content">
-            <div className="question-content">
+        <div className={styles.content}>
+            <div className={styles["question-content"]}>
                 <Question onProblemLoad={handleProblemLoad} />
             </div>
-            <div className="editor-content">
+            <div className={styles["editor-content"]}>
                 {problemId !== null ? (
                     <CodeEditor
                         onMount={handleCodeEditorMount}
                         problemId={problemId}
                     />
                 ) : (
-                    <div className="editor-placeholder"></div>
+                    <div className={styles["editor-placeholder"]}>
+                        문제를 선택해주세요.
+                    </div>
                 )}
                 <Output onRun={handleRun} output={output} message={message} />
             </div>
