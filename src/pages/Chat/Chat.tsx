@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Client } from "@stomp/stompjs";
-import SockJS from "sockjs-client";
 import deleteIcon from "../../assets/delete.png";
 import "./Chat.scss";
 import { useNavigate } from "react-router-dom";
@@ -9,19 +8,15 @@ import { useNavigate } from "react-router-dom";
 const Chat = () => {
   const [stompClient, setStompClient] = useState<any>(null);
   const baseURL = `wss://${process.env.REACT_APP_BASE_URL}/ws/chat`;
-  // const baseURL = "wss://codeable.duckdns.org/ws/chat";
 
   // 채팅 메시지 상태 (닉네임과 텍스트를 저장)
-  const [messages, setMessages] = useState<{ user: string; text: string }[]>(
-    []
-  );
+  const [messages, setMessages] = useState<
+    { user: string | null; text: string }[]
+  >([]);
   const [input, setInput] = useState(""); // 입력 필드 상태
 
-  const storedName = localStorage.getItem("name"); // 로그인한 멤버 정보 가져오기 (localStorage에서)
-  const userNickname = storedName ? storedName : "코딩왕비빔밥님"; // 현재 사용자의 닉네임 (Kakao API로 가져와야 함)
-
   const authHeader = window.localStorage.getItem("token") || "";
-  const today = new Date().toISOString().slice(0, 10);
+  const userNickname = localStorage.getItem("name");
 
   useEffect(() => {
     const client = new Client({
@@ -58,21 +53,8 @@ const Chat = () => {
     };
   }, []);
 
-  // 메시지 전송 함수
-  // const sendMessage = () => {
-  //     if (input.trim() && stompClient) {
-  //         const message = {
-  //             studyName: "testStudy",
-  //             sender: userNickname,
-  //             message: input,
-  //             timestamp: new Date().toISOString(),
-  //         };
-  //         stompClient.send("/publish/room", {}, JSON.stringify(message));
-  //         setInput(""); // 입력 필드 초기화
-  //     }
-  // };
-
   const sendMessage = () => {
+    console.log(userNickname);
     if (input.trim() && stompClient) {
       const now = new Date();
       now.setMinutes(now.getMinutes() - now.getTimezoneOffset()); // UTC -> Local 변환
@@ -84,6 +66,8 @@ const Chat = () => {
         message: input,
         timestamp: formattedTimestamp, // 한국 시간 반영, 형식 일치 확인
       };
+
+      console.log(message);
 
       stompClient.send("/publish/chat/room", {}, JSON.stringify(message));
       setMessages((prevMessages) => [
