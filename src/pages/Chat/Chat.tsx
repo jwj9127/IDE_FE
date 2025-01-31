@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
 import { Client } from "@stomp/stompjs";
 import deleteIcon from "../../assets/delete.png";
 import "./Chat.scss";
@@ -69,12 +68,16 @@ const Chat = () => {
       console.log(message);
       console.log(stompClient);
 
-      stompClient.send("/publish/chat/room", {}, JSON.stringify(message));
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        { user: userNickname, text: input },
-      ]);
-      setInput("");
+      if (stompClient.connected === true) {
+        stompClient.send("/publish/chat/room", {}, JSON.stringify(message));
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          { user: userNickname, text: input },
+        ]);
+        setInput("");
+      } else {
+        console.log(stompClient + "연결이 안됐어요");
+      }
     }
   };
 
