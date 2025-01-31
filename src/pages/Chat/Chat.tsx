@@ -46,11 +46,6 @@ const Chat = () => {
     });
 
     client.activate();
-    return () => {
-      if (client) {
-        client.deactivate();
-      }
-    };
   }, []);
 
   const sendMessage = () => {
