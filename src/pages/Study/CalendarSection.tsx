@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axiosInstance from "../../utils/axiosInstance"; 
+import axiosInstance from "../../utils/axiosInstance";
 import studyYes from "../../assets/studyYes.png";
 import studyNo from "../../assets/studyNo.png";
 import styles from "./CalendarSection.module.scss";
@@ -31,9 +31,25 @@ const CalendarSection = ({ month, calendar, todayDate }: CalendarSectionProps) =
     const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]);
     const [codeData, setCodeData] = useState<CodeData | null>(null);
     const [studyImage, setStudyImage] = useState<{ [key: number]: string }>({});
+    const [popupPosition, setPopupPosition] = useState<{ top: string; left: string }>({ top: "100%", left: "50%" });
 
-    const handleDateClick = async (date: number) => {
+    const handleDateClick = async (date: number, event: React.MouseEvent<HTMLTableCellElement>) => {
         setSelectedDate(selectedDate === date ? null : date);
+
+        const td = event.currentTarget;
+        const rect = td.getBoundingClientRect();
+        const calendarRect = td.closest("table")?.getBoundingClientRect();
+
+        if (calendarRect) {
+            const isLastRow = rect.bottom + 100 > calendarRect.bottom;
+            const isRightEdge = rect.right + 120 > calendarRect.right;
+            const isLeftEdge = rect.left - 120 < calendarRect.left;
+
+            let top = isLastRow ? "-145%" : "100%";
+            let left = isRightEdge ? "-100%" : isLeftEdge ? "70%" : "50%";
+
+            setPopupPosition({ top, left });
+        }
 
         try {
             const chatResponse = await axiosInstance.get(`/api/chats?date=${date}`);
@@ -91,11 +107,10 @@ const CalendarSection = ({ month, calendar, todayDate }: CalendarSectionProps) =
                                     <td
                                         key={colIdx}
                                         className={date ? styles.dateCell : styles.empty}
-                                        onClick={() => date && handleDateClick(date)}
+                                        onClick={(event) => date && handleDateClick(date, event)}
                                     >
                                         {date && <p>{date}</p>}
 
-                                        {/* 여기서 studyNo 이미지가 있는 날짜는 눌러도 popupDiv가 나오지 않게 해줘. studyNo는 디폴트 이미지이고, api 연동 시 */}
                                         {date && date < todayDate && ( 
                                             <img
                                                 src={studyImage[date] || studyNo}
@@ -105,13 +120,13 @@ const CalendarSection = ({ month, calendar, todayDate }: CalendarSectionProps) =
                                         )}
 
                                         {selectedDate === date && date && (
-                                            <div className={styles.popup}>
-                                                {/* 문제풀이 버튼 */}
+                                            <div
+                                                className={styles.popup}
+                                                style={{ top: popupPosition.top, left: popupPosition.left }}
+                                            >
                                                 <button className={styles.questionButton}>
                                                     <img className="question-img" src={questionX} alt="문제풀이" />
                                                 </button>
-
-                                                {/* 채팅 버튼 */}
                                                 <button className={styles.chattingButton}>
                                                     <img className="chatting-img" src={chattingX} alt="채팅" />
                                                 </button>
