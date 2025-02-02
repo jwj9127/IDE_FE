@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Client } from "@stomp/stompjs";
 import deleteIcon from "../../assets/delete.png";
 import "./Chat.scss";
@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import SockJS from "sockjs-client";
 
 const Chat = () => {
-  const [stompClient, setStompClient] = useState<any>(null);
   const baseURL = `https://${process.env.REACT_APP_BASE_URL}/ws/chat`;
 
   // 채팅 메시지 상태 (닉네임과 텍스트를 저장)
@@ -14,6 +13,7 @@ const Chat = () => {
     { user: string | null; text: string }[]
   >([]);
   const [input, setInput] = useState(""); // 입력 필드 상태
+  const stompClientRef = useRef<any>(null);
 
   const authHeader = window.localStorage.getItem("token") || "";
   const userNickname = localStorage.getItem("name");
@@ -37,8 +37,7 @@ const Chat = () => {
           }
         });
         console.log("웹 소켓 연결 시점에서 client 상태 => ", client);
-        setStompClient(client);
-        console.log("setStompClient 설정한 후 StompClient => ", stompClient);
+        stompClientRef.current = client;
       },
 
       onDisconnect: () => {
@@ -55,7 +54,7 @@ const Chat = () => {
 
   const sendMessage = () => {
     console.log(userNickname);
-    if (input.trim() && stompClient) {
+    if (input.trim() && stompClientRef !== null) {
       const now = new Date();
       now.setMinutes(now.getMinutes() - now.getTimezoneOffset()); // UTC -> Local 변환
       const formattedTimestamp = now.toISOString().split(".")[0];
@@ -67,15 +66,16 @@ const Chat = () => {
         timestamp: formattedTimestamp, // 한국 시간 반영, 형식 일치 확인
       };
 
-      console.log("message 형식 => " + message);
-      console.log("send 보낼 때 stompClient => " + stompClient);
+      console.log("message 형식 => ", message);
+      console.log("send 보낼 때 stompClient => ", stompClientRef);
 
-      stompClient.send("/publish/room", {}, JSON.stringify(message));
+      stompClientRef.current.send("/publish/room", {}, JSON.stringify(message));
       setMessages((prevMessages) => [
         ...prevMessages,
         { user: userNickname, text: input },
       ]);
       setInput("");
+    } else {
     }
   };
 
