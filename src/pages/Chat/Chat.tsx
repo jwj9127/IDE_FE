@@ -7,7 +7,7 @@ import SockJS from "sockjs-client";
 
 const Chat = () => {
   const [stompClient, setStompClient] = useState<any>(null);
-  const baseURL = `wss://${process.env.REACT_APP_BASE_URL}/ws/chat`;
+  const baseURL = `https://${process.env.REACT_APP_BASE_URL}/ws/chat`;
 
   // 채팅 메시지 상태 (닉네임과 텍스트를 저장)
   const [messages, setMessages] = useState<
@@ -22,9 +22,7 @@ const Chat = () => {
 
   useEffect(() => {
     const client = new Client({
-      webSocketFactory: () =>
-        new SockJS(`https://${process.env.REACT_APP_BASE_URL}`),
-      brokerURL: baseURL,
+      webSocketFactory: () => new SockJS(baseURL),
       connectHeaders: {
         Authorization: authHeader,
       } as { Authorization: string },
