@@ -14,6 +14,7 @@ const Chat = () => {
   >([]);
   const [input, setInput] = useState(""); // 입력 필드 상태
   const stompClientRef = useRef<any>(null);
+  const chatBoxRef = useRef<HTMLDivElement>(null);
 
   const authHeader = window.localStorage.getItem("token") || "";
   const userNickname = localStorage.getItem("name");
@@ -50,6 +51,15 @@ const Chat = () => {
 
     client.activate();
   }, []);
+
+  useEffect(() => {
+    if (chatBoxRef.current) {
+      chatBoxRef.current.scrollTo({
+        top: chatBoxRef.current.scrollHeight,
+        behavior: "smooth",
+      });
+    }
+  }, [messages]);
 
   const sendMessage = () => {
     console.log(userNickname);
@@ -88,7 +98,7 @@ const Chat = () => {
   return (
     <div className="chat-container">
       <div className="chat-ground">
-        <div className="chat-box">
+        <div className="chat-box" ref={chatBoxRef}>
           {messages.map((msg, index) => (
             <div
               key={index}
