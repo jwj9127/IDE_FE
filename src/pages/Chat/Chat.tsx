@@ -3,6 +3,7 @@ import { Client } from "@stomp/stompjs";
 import deleteIcon from "../../assets/delete.png";
 import "./Chat.scss";
 import { useNavigate } from "react-router-dom";
+import SockJS from "sockjs-client";
 
 const Chat = () => {
   const [stompClient, setStompClient] = useState<any>(null);
@@ -21,6 +22,7 @@ const Chat = () => {
 
   useEffect(() => {
     const client = new Client({
+      webSocketFactory: new SockJS(`https://${process.env.REACT_APP_BASE_URL}`),
       brokerURL: baseURL,
       connectHeaders: {
         Authorization: authHeader,
