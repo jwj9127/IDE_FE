@@ -21,8 +21,6 @@
     }
 
 
-  
-
   .chat-box {
     flex: center;
     height: 85%;
@@ -34,7 +32,7 @@
     .chat-message {
       display: flex;
       flex-direction: column;
-      margin-bottom: 12px;
+      margin: 24px;
 
       &.my-message {
         align-items: flex-end;
