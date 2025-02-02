@@ -31,6 +31,7 @@ const Chat = () => {
         client.subscribe("/subscribe/chat/room/testStudy", (message) => {
           console.log(message);
           if (message.body) {
+            console.log(message.body);
             const receivedMessage = JSON.parse(message.body);
             setMessages((prev) => [...prev, receivedMessage]);
           }
