@@ -22,7 +22,8 @@ const Chat = () => {
 
   useEffect(() => {
     const client = new Client({
-      webSocketFactory: new SockJS(`https://${process.env.REACT_APP_BASE_URL}`),
+      webSocketFactory: () =>
+        new SockJS(`https://${process.env.REACT_APP_BASE_URL}`),
       brokerURL: baseURL,
       connectHeaders: {
         Authorization: authHeader,
