@@ -29,6 +29,7 @@ const Chat = () => {
         console.log("WebSocket open");
         // 채팅 구독
         client.subscribe("/subscribe/chat/room/testStudy", (message) => {
+          console.log(message);
           if (message.body) {
             const receivedMessage = JSON.parse(message.body);
             setMessages((prev) => [...prev, receivedMessage]);
@@ -62,9 +63,6 @@ const Chat = () => {
         message: input,
         timestamp: formattedTimestamp, // 한국 시간 반영, 형식 일치 확인
       };
-
-      console.log("message 형식 => ", message);
-      console.log("send 보낼 때 stompClient => ", stompClientRef);
 
       stompClientRef.current.publish({
         destination: "/publish/room",
