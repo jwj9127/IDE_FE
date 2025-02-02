@@ -10,7 +10,7 @@ const Chat = () => {
 
   // 채팅 메시지 상태 (닉네임과 텍스트를 저장)
   const [messages, setMessages] = useState<
-    { user: string | null; text: string }[]
+    { sender: string | null; message: string }[]
   >([]);
   const [input, setInput] = useState(""); // 입력 필드 상태
   const stompClientRef = useRef<any>(null);
@@ -72,7 +72,7 @@ const Chat = () => {
       });
       setMessages((prevMessages) => [
         ...prevMessages,
-        { user: userNickname, text: input },
+        { sender: userNickname, message: input },
       ]);
       setInput("");
     } else {
@@ -97,11 +97,11 @@ const Chat = () => {
             <div
               key={index}
               className={`chat-message ${
-                msg.user === userNickname ? "my-message" : "other-message"
+                msg.sender === userNickname ? "my-message" : "other-message"
               }`}
             >
-              <span className="nickname">{msg.user}</span>
-              <p>{msg.text}</p>
+              <span className="nickname">{msg.sender}</span>
+              <p>{msg.message}</p>
             </div>
           ))}
         </div>
