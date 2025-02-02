@@ -36,7 +36,7 @@ const Chat = () => {
             setMessages((prev) => [...prev, receivedMessage]);
           }
         });
-        console.log("웹 소켓 연결 시점에서 client 상태 => " + client);
+        console.log("웹 소켓 연결 시점에서 client 상태 => " + client.activate);
         setStompClient(client);
         console.log("setStompClient 설정한 후 StompClient => " + stompClient);
       },
