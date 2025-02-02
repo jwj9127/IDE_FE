@@ -18,8 +18,6 @@ const Chat = () => {
   const authHeader = window.localStorage.getItem("token") || "";
   const userNickname = localStorage.getItem("name");
 
-  console.log("헤더 토큰 => " + authHeader);
-
   useEffect(() => {
     const client = new Client({
       webSocketFactory: () => new SockJS(baseURL),
@@ -36,7 +34,6 @@ const Chat = () => {
             setMessages((prev) => [...prev, receivedMessage]);
           }
         });
-        console.log("웹 소켓 연결 시점에서 client 상태 => ", client);
         stompClientRef.current = client;
       },
 
