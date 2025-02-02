@@ -11,13 +11,13 @@
     height: 500px;
     background-color: #AFAFAF; // 채팅 박스 배경색
     border-radius: 24px;
-    margin-top: 50px; 
+    margin-top: 50px;
     padding: 15px;
     overflow-y: auto;
     -ms-overflow-style: none;  /*IE, Edge*/
     ::-webkit-scrollbar {
       display: none; /*Chrome, Safari, Opera*/
-    } 
+    }
     }
 
 
@@ -27,7 +27,9 @@
     background-color: #E3E3E3; // 채팅 박스 배경색
     border-radius: 12px;
     overflow-y: auto;
-    
+    display: flex;
+    flex-direction: column-reverse;
+
 
     .chat-message {
       display: flex;
@@ -83,7 +85,7 @@
     align-items: center;
     gap: 1rem;
     margin-top: 15px;
-    
+
     input {
       flex: 1;
       padding: 15px;
@@ -91,7 +93,7 @@
       border-radius: 12px;
       font-size: 1rem;
       background-color: #F5F5F5;
-      outline: none; 
+      outline: none;
     }
 
 
