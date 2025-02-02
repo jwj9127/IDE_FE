@@ -70,10 +70,6 @@ const Chat = () => {
         headers: {},
         body: JSON.stringify(message),
       });
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        { sender: userNickname, message: input },
-      ]);
       setInput("");
     } else {
     }
