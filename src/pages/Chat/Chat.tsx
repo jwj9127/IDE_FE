@@ -1,27 +1,27 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Client } from "@stomp/stompjs";
 import deleteIcon from "../../assets/delete.png";
 import "./Chat.scss";
 import { useNavigate } from "react-router-dom";
+import SockJS from "sockjs-client";
 
 const Chat = () => {
-  const [stompClient, setStompClient] = useState<any>(null);
-  const baseURL = `wss://${process.env.REACT_APP_BASE_URL}/ws/chat`;
+  const baseURL = `https://${process.env.REACT_APP_BASE_URL}/ws/chat`;
 
   // 채팅 메시지 상태 (닉네임과 텍스트를 저장)
   const [messages, setMessages] = useState<
-    { user: string | null; text: string }[]
+    { sender: string | null; message: string }[]
   >([]);
   const [input, setInput] = useState(""); // 입력 필드 상태
+  const stompClientRef = useRef<any>(null);
+  const chatBoxRef = useRef<HTMLDivElement>(null);
 
   const authHeader = window.localStorage.getItem("token") || "";
   const userNickname = localStorage.getItem("name");
 
-  console.log("헤더 토큰 => " + authHeader);
-
   useEffect(() => {
     const client = new Client({
-      brokerURL: baseURL,
+      webSocketFactory: () => new SockJS(baseURL),
       connectHeaders: {
         Authorization: authHeader,
       } as { Authorization: string },
@@ -30,14 +30,14 @@ const Chat = () => {
         console.log("WebSocket open");
         // 채팅 구독
         client.subscribe("/subscribe/chat/room/testStudy", (message) => {
+          console.log(message);
           if (message.body) {
+            console.log(message.body);
             const receivedMessage = JSON.parse(message.body);
             setMessages((prev) => [...prev, receivedMessage]);
           }
         });
-        console.log("웹 소켓 연결 시점에서 client 상태 => " + client);
-        setStompClient(client);
-        console.log("setStompClient 설정한 후 StompClient => " + stompClient);
+        stompClientRef.current = client;
       },
 
       onDisconnect: () => {
@@ -52,9 +52,18 @@ const Chat = () => {
     client.activate();
   }, []);
 
+  useEffect(() => {
+    if (chatBoxRef.current) {
+      chatBoxRef.current.scrollTo({
+        top: chatBoxRef.current.scrollHeight,
+        behavior: "smooth",
+      });
+    }
+  }, [messages]);
+
   const sendMessage = () => {
     console.log(userNickname);
-    if (input.trim() && stompClient) {
+    if (input.trim() && stompClientRef !== null) {
       const now = new Date();
       now.setMinutes(now.getMinutes() - now.getTimezoneOffset()); // UTC -> Local 변환
       const formattedTimestamp = now.toISOString().split(".")[0];
@@ -66,15 +75,13 @@ const Chat = () => {
         timestamp: formattedTimestamp, // 한국 시간 반영, 형식 일치 확인
       };
 
-      console.log("message 형식 => " + message);
-      console.log("send 보낼 때 stompClient => " + stompClient);
-
-      stompClient.send("/publish/room", {}, JSON.stringify(message));
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        { user: userNickname, text: input },
-      ]);
+      stompClientRef.current.publish({
+        destination: "/publish/room",
+        headers: {},
+        body: JSON.stringify(message),
+      });
       setInput("");
+    } else {
     }
   };
 
@@ -91,16 +98,16 @@ const Chat = () => {
   return (
     <div className="chat-container">
       <div className="chat-ground">
-        <div className="chat-box">
+        <div className="chat-box" ref={chatBoxRef}>
           {messages.map((msg, index) => (
             <div
               key={index}
               className={`chat-message ${
-                msg.user === userNickname ? "my-message" : "other-message"
+                msg.sender === userNickname ? "my-message" : "other-message"
               }`}
             >
-              <span className="nickname">{msg.user}</span>
-              <p>{msg.text}</p>
+              <span className="nickname">{msg.sender}</span>
+              <p>{msg.message}</p>
             </div>
           ))}
         </div>
