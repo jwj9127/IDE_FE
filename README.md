@@ -7,6 +7,7 @@
 ## 🚧프로젝트 소개
 
 접근하기 쉽고 재밌는 web IDE 제작하기
+더 자세한 설명은 [여기](https://github.com/user-attachments/files/19094788/KDT.1.pdf)를 참고해주세요!
 
 ## 👩🏻‍💻 프로젝트 참여 인원
 
