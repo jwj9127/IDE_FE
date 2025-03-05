@@ -1,46 +1,103 @@
-# Getting Started with Create React App
+## 📛프로젝트명 - 코드에이블(Codable)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+#### Coding + able = codable (코팅을 잘할 수 있게 돕는다는 의미입니다!)
 
-## Available Scripts
+<br/>
 
-In the project directory, you can run:
+## 🚧프로젝트 소개
 
-### `npm start`
+접근하기 쉽고 재밌는 web IDE 제작하기
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## 👩🏻‍💻 프로젝트 참여 인원
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+#### Frontend - 3명
+#### Backend - 3명
 
-### `npm test`
+## ✨ 기술 스택
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- 기획디자인 : <img src="https://img.shields.io/badge/figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white">
+- 프론트엔드 : <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=white"> <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=TypeScript&logoColor=white" /> <img src="https://img.shields.io/badge/SCSS-CC6699?style=for-the-badge&logo=SASS&logoColor=white" /> <img src="https://img.shields.io/badge/Netlify-00C7B7?style=for-the-badge&logo=Netlify&logoColor=white" />
 
-### `npm run build`
+- 백엔드 : <img src="https://img.shields.io/badge/java-007396?style=for-the-badge&logo=java&logoColor=white"> <img src="https://img.shields.io/badge/spring Boot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white"> <img src="https://img.shields.io/badge/JPA-6DB33F?style=for-the-badge&logo=JPA&logoColor=white"/> <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white" /> <img src="https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white" /> <img src="https://img.shields.io/badge/Redis-DC382D?style=for-the-badge&logo=redis&logoColor=white" />
+<img src="https://img.shields.io/badge/AWS EC2-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white" /> <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" /> <img src="https://img.shields.io/badge/GitHub Actions-2088FF?style=for-the-badge&logo=githubactions&logoColor=white" />
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- ETC : <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white"> <img src="https://img.shields.io/badge/notion-000000?style=for-the-badge&logo=notion&logoColor=white">
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 💡 서비스 핵심 기능
 
-### `npm run eject`
+**`웹 스터디 공간`**
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+<br/>
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+  - 팀만의 규칙 & 룰을 적용시킬 수 있는 웹 스터디 공간
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+<br/>
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+**`달력`**
 
-## Learn More
+<br/>
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+  - 당일 스터디 여부를 확인할 수 있습니다.
+  - 문제, 채팅 기록을 확인할 수 있습니다.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+<br/>
+
+**`코드 편집기`**
+
+<br/>
+
+  - 코딩 테스트 문제 지원
+  - JAVA, Python 지원
+
+<br/>
+
+**`채팅`**
+
+<br/>
+
+  - 코딩 테스트 이후 팀원간의 소통을 지원
+
+<br/>
+
+## 🖼️ 디자인
+
+- 시작화면
+<center><img src ="https://github.com/user-attachments/assets/395be0c1-c6a9-497d-b465-b87c74207c0f" /></center>
+
+- 메인 화면 (스터디 화면)
+<center> <img src ="https://github.com/user-attachments/assets/5099d0a8-fd32-418e-a17c-20abfdb56672" /></center>
+
+- 코드 편집기 화면
+<center> <img src ="https://github.com/user-attachments/assets/e6698f2b-d9cc-46fd-b511-655579bbc79e" /></center>
+
+- 스터디 채팅 화면
+<center> <img src ="https://github.com/user-attachments/assets/dd3b72fb-123f-4f4d-9f8e-ca906a36f85e" /></center>
+
+## 🍆 본인이 구현한 기능
+
+- 카카오 소셜 로그인 인증 / 인가
+
+- STOMP로 채팅 구현
+
+## 🚩 트러블 슈팅
+
+### 1. 문제 - 카카오 소셜 로그인 인증 / 인가
+#### 상황
+- 카카오 인증/인가 처리 과정을 백엔드와 분담 후 맡은 부분에 대해 잘 구현이 되지 않음
+
+#### 해결 방법
+- 카카오 디펠로퍼 공식 문서를 통해 인증 / 인가 처리 과정을 공부 후 해결
+
+#### 배운 점 
+- 공식 문서를 통해 개발에 대한 이해를 높일 수 있는 자료가 많다는 걸 알게 되었다.
+
+### 2. 문제 - SockJS 연결이 되지 않는 문제 발생
+#### 상황
+- SockJs 연결이 잘 되지 않는 상황이 발생
+
+#### 해결 방법
+- SockJs 깃허브 문서를 통해 메서드를 공부하고 로직에서 잘못된 부분을 수정
+
+#### 배운 점 
+- 깃허브 문서에서 메서드를 참고하는 것이 개발에 도움이 된다는 사실을 알게 되었다.
